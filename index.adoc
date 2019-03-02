@@ -9,7 +9,7 @@ Hrvoje Nezic
 The example below illustrates the structure of a basic ditaa block written
 directly in an AsciiDoc document.
 
-[ditaa]
+[ditaa, diagram-ditaa, png]
 ....
                    +-------------+
                    | Asciidoctor |-------+
@@ -34,7 +34,7 @@ directly in an AsciiDoc document.
 The example below illustrates the structure of a basic PlantUML block written
 directly in an AsciiDoc document.
 
-[plantuml, diagram-classes, png]
+[plantuml, diagram-plantuml, png]
 ....
 class BlockProcessor
 class DiagramBlock
@@ -48,7 +48,7 @@ DiagramBlock <|-- PlantUmlBlock
 
 == GraphViz
 
-[graphviz]
+[graphviz, diagram-graphviz, png]
 ....
 graph {
     a -- b;
