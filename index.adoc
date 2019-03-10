@@ -8,20 +8,99 @@ Hrvoje Nezic
 
 == Overview
 
-The PSClasses project provides classes with inheritance to *PowerShell*
+The PSClasses project provides classes with inheritance to PowerShell
 versions earlier than 5.0.
 
 PSClasses include important *features* of object-oriented languages,
 like following:
 
-* class inheritance
-* overriding methods
-* ability to call overridden superclass methods
-* multiple constructors
-* ability to call other constructors of the same class
-* ability to call superclass constructors
+[cols="20h,80a",options="header"]
+|===
+^| Feature ^| Example
+^.^|class inheritance
 
-PSClasses also contain an uncommon feature: implicit *generation* of the
+| [source,powershell]
+----
+CreateClass "IntCounter" $null '[int] $value' @{ .. }
+
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{ .. }
+----
+
+^.^|overriding methods
+
+| [source,powershell]
+----
+CreateClass "IntCounter" $null '[int] $value' @{
+    increment = { .. }
+}
+
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    increment = { .. }
+}
+----
+
+^.^|calling overridden superclass methods
+
+| [source,powershell]
+----
+CreateClass "IntCounter" $null '[int] $value' @{ increment = { .. } }
+
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    increment = {
+        $this.IntCounter_increment()
+        ..
+    }
+}
+----
+
+^.^|multiple constructors
+
+| [source,powershell]
+----
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    init = { .. }
+
+    init0 = { .. }
+}
+----
+
+^.^|calling other constructors of same class
+
+| [source,powershell]
+----
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    init = {
+        param([int] $value, [int] $modulus)
+        ..
+    }
+
+    init0 = {
+        param([int] $modulus)
+        $this.ModularCounter_init(0, $modulus)
+    }
+}
+----
+
+^.^|calling superclass constructors
+
+| [source,powershell]
+----
+    CreateClass "IntCounter" $null '[int] $value' @{ .. }
+
+    CreateClass "BoundedCounter" -extends "IntCounter" '[int] $bound' @{
+        init = {
+            param([int] $value, [int] $bound)
+
+            # Call generated constructor "init" of superclass
+            $this.IntCounter_init($value)
+            ..
+        }
+    }
+----
+
+|===
+
+The PSClasses library also contain an uncommon feature: implicit *generation* of the
 constructor which accepts arguments corresponding to all instance
 variables. This feature resembles _case classes_ in Scala or _data
 classes_ in Kotlin.
@@ -41,7 +120,7 @@ of *Pester* tests.
 
 The CreateClass function accepts following *arguments*:
 
-[cols=",,",options="header",]
+[cols=",,",options="header",frame=none,grid=none,width=75%]
 |===
 |Argument |Alias |Mandatory
 |class name |-name |yes
