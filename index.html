@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
 <meta name="author" content="Hrvoje Nezic">
-<title>Diagrams</title>
+<title>PSClasses</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -431,57 +431,712 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.listingblock .pygments .hll { background-color: #ffffcc }
+.listingblock .pygments, .listingblock .pygments code { background: #f8f8f8; }
+.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
+.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
+.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
+.listingblock .pygments .tok-o { color: #666666 } /* Operator */
+.listingblock .pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
+.listingblock .pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
+.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
+.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
+.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
+.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
+.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
+.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
+.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
+.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
+.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
+.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
+.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
+.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
+.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
+.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
+.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
+.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
+.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
+.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
+.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
+.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
+.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
+.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
+.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
+.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
+.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
+.listingblock .pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
+.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
+.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
+.listingblock .pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
+.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
+.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
+.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
+.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
+.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
+.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
+.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
+.listingblock .pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
+.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
+.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
+.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
+.listingblock .pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
+.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Diagrams</h1>
+<h1>PSClasses</h1>
 <div class="details">
 <span id="author" class="author">Hrvoje Nezic</span><br>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_ditta">Ditta</a></li>
-<li><a href="#_plantuml">PlantUML</a></li>
-<li><a href="#_graphviz">GraphViz</a></li>
+<li><a href="#_overview">Overview</a></li>
+<li><a href="#_usage">Usage</a>
+<ul class="sectlevel2">
+<li><a href="#_class_creation">Class creation</a>
+<ul class="sectlevel3">
+<li><a href="#_example">Example</a></li>
+</ul>
+</li>
+<li><a href="#_instance_variables">Instance variables</a>
+<ul class="sectlevel3">
+<li><a href="#_examples">Examples</a></li>
+</ul>
+</li>
+<li><a href="#_methods">Methods</a>
+<ul class="sectlevel3">
+<li><a href="#_overriding_methods">Overriding methods</a></li>
+<li><a href="#_example_2">Example</a></li>
+</ul>
+</li>
+<li><a href="#_constructors">Constructors</a>
+<ul class="sectlevel3">
+<li><a href="#_generated_constructor">Generated constructor</a></li>
+<li><a href="#_example_1">Example 1</a></li>
+<li><a href="#_example_2_2">Example 2</a>
+<ul class="sectlevel4">
+<li><a href="#_intcounter">IntCounter</a></li>
+<li><a href="#_modularcounter_calls_other_constructors">ModularCounter calls other constructors</a></li>
+</ul>
+</li>
+<li><a href="#_example_3">Example 3</a></li>
+</ul>
+</li>
+<li><a href="#_object_creation">Object creation</a>
+<ul class="sectlevel3">
+<li><a href="#_new">New</a></li>
+<li><a href="#_new_2">New_</a></li>
+<li><a href="#_using_class_object_methods">Using class object methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_ditta">Ditta</h2>
+<h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The example below illustrates the structure of a basic ditaa block written
-directly in an AsciiDoc document.</p>
+<p>The PSClasses project provides classes with inheritance to <strong>PowerShell</strong>
+versions earlier than 5.0.</p>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="diagram-ditaa.png" alt="diagram ditaa" width="540" height="280">
+<div class="paragraph">
+<p>PSClasses include important <strong>features</strong> of object-oriented languages,
+like following:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>class inheritance</p>
+</li>
+<li>
+<p>overriding methods</p>
+</li>
+<li>
+<p>ability to call overridden superclass methods</p>
+</li>
+<li>
+<p>multiple constructors</p>
+</li>
+<li>
+<p>ability to call other constructors of the same class</p>
+</li>
+<li>
+<p>ability to call superclass constructors</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>PSClasses also contain an uncommon feature: implicit <strong>generation</strong> of the
+constructor which accepts arguments corresponding to all instance
+variables. This feature resembles <em>case classes</em> in Scala or <em>data
+classes</em> in Kotlin.</p>
+</div>
+<div class="paragraph">
+<p>The project includes a simple <strong>template engine</strong> used in implementation
+of some features.</p>
+</div>
+<div class="paragraph">
+<p>The file <strong>ClassGenerator_Test.ps1</strong> contains numerous <strong>examples</strong> in form
+of <strong>Pester</strong> tests.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_plantuml">PlantUML</h2>
+<h2 id="_usage">Usage</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_class_creation">Class creation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>A class is created by calling <strong>CreateClass</strong> function.</p>
+</li>
+<li>
+<p>The created class is represented by a <strong>class object</strong>.</p>
+</li>
+<li>
+<p>A <strong>variable</strong> holding the class object is automatically created.</p>
+</li>
+<li>
+<p>The <strong>variable name</strong> is formed like this: <strong><code>$&lt;className&gt;Class</code></strong>.</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>The example below illustrates the structure of a basic PlantUML block written
-directly in an AsciiDoc document.</p>
+<p>The CreateClass function accepts following <strong>arguments</strong>:</p>
 </div>
-<div class="imageblock">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Argument</th>
+<th class="tableblock halign-left valign-top">Alias</th>
+<th class="tableblock halign-left valign-top">Mandatory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">class name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">superclass</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-extends</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">instance variables</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-variables</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">methods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-methods</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">no</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="_example">Example</h4>
+<div class="listingblock">
 <div class="content">
-<img src="diagram-plantuml.png" alt="diagram plantuml" width="276" height="282">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Person&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-n">reportAge</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-s2">&quot;My age is </span><span class="tok-p">$(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">age</span><span class="tok-p">)</span><span class="tok-s2">&quot;</span>
+    <span class="tok-p">}</span>
+
+    <span class="tok-n">reportName</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-s2">&quot;My name is </span><span class="tok-p">$(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">name</span><span class="tok-p">)</span><span class="tok-s2">&quot;</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>This call creates the class object <strong>$PersonClass</strong>:</p>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_graphviz">GraphViz</h2>
-<div class="sectionbody">
-<div class="imageblock">
+<div class="listingblock">
 <div class="content">
-<img src="diagram-graphviz.png" alt="diagram graphviz" width="265" height="347">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-p">&gt;</span> <span class="tok-nv">$PersonClass</span>
+
+<span class="tok-n">className</span>         <span class="tok-err">:</span> <span class="tok-n">Person</span>
+<span class="tok-n">super</span>             <span class="tok-err">:</span>
+<span class="tok-n">allVariablesStr</span>   <span class="tok-err">:</span> <span class="tok-no">[string]</span> <span class="tok-nv">$name</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$age</span><span class="tok-p">,</span> <span class="tok-no">[boolean]</span> <span class="tok-nv">$male</span>
+<span class="tok-n">variables</span>         <span class="tok-err">:</span> <span class="tok-p">{</span><span class="tok-n">name</span><span class="tok-p">,</span> <span class="tok-n">age</span><span class="tok-p">,</span> <span class="tok-n">male</span><span class="tok-p">}</span>
+<span class="tok-p">...</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_instance_variables">Instance variables</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Instance variables are specified as a <strong>string</strong> containing a
+comma-separated variable list along with <strong>optional</strong> type specifiers.</p>
+</li>
+<li>
+<p>The string containing instance variables is also used for parameters
+of the <strong>generated constructor</strong> named <strong>init</strong>.</p>
+</li>
+<li>
+<p>The string is <strong>parsed</strong> and the variable names extracted.</p>
+</li>
+<li>
+<p>Syntax is the same as syntax of function parameters or script block
+parameters.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_examples">Examples</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span>
+
+<span class="tok-s1">&#39;[PSCustomObject] $successor, [string] $topic&#39;</span>
+
+<span class="tok-s1">&#39;$drive, $certSubject, $certAccount&#39;</span>
+
+<span class="tok-s1">&#39;&#39;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_methods">Methods</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>The methods are written as a <strong>dictionary</strong> of <em>(name, script block)</em>
+pairs.</p>
+</li>
+<li>
+<p>The methods dictionary can be an unordered hashtable or ordered
+dictionary.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_overriding_methods">Overriding methods</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>A derived class can <strong>override</strong> superclass methods.</p>
+</li>
+<li>
+<p>Each overridden method is available in following form:
+<strong><code>&lt;className&gt;_&lt;methodName&gt;</code></strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_2">Example</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">+=</span> <span class="tok-n">1</span>
+    <span class="tok-p">}</span>
+
+    <span class="tok-n">reset</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">=</span> <span class="tok-n">0</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-c"># Override superclass method</span>
+    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-o">-eq</span> <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">modulus</span> <span class="tok-p">-</span> <span class="tok-n">1</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+            <span class="tok-c"># Call inherited method</span>
+            <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">reset</span><span class="tok-p">()</span>
+        <span class="tok-p">}</span> <span class="tok-k">Else</span> <span class="tok-p">{</span>
+            <span class="tok-c"># Call superclass version</span>
+            <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_increment</span><span class="tok-p">()</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ModularCounter class overrides <strong>increment</strong> method. The ModularCounter&#8217;s
+<strong>increment</strong> method calls the superclass version:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_increment</span><span class="tok-p">()</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_constructors">Constructors</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Constructors are special <strong>methods</strong> whose names start with <strong>init</strong>.</p>
+</li>
+<li>
+<p>A class can contain <strong>multiple</strong> constructors.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each constructor can call:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>any other constructor of the <strong>same class</strong>, including the generated
+constructor</p>
+</li>
+<li>
+<p>any <strong>superclass</strong> constructor</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When a custom constructor calls other constructors it must use one of
+following forms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><code>&lt;className&gt;_&lt;constructorName&gt;</code></strong> (for calling other custom
+constructors)</p>
+</li>
+<li>
+<p><strong><code>&lt;className&gt;_gen_init</code></strong> (for calling the generated constructor)</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_generated_constructor">Generated constructor</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The constructor named init is generated automatically.</p>
+</li>
+<li>
+<p>It accepts arguments corresponding to all instance variables
+(including instance variables declared in superclasses).</p>
+</li>
+<li>
+<p>It copies the arguments into instance variables.</p>
+</li>
+<li>
+<p>The generated constructor can be overridden by a custom constructor.</p>
+</li>
+<li>
+<p>If overridden, the generated constructor is still available to be
+called from other constructors as a method with following name:
+<strong><code>&lt;className&gt;_gen_init</code></strong>.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_1">Example 1</h4>
+<div class="paragraph">
+<p>Let&#8217;s look at the example above which creates <strong>Person</strong> class. The
+Person&#8217;s methods don&#8217;t include custom constructors. The generated
+constructor <strong>init</strong> is available after class creation. Its arguments
+correspond to instance variables:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>$name</p>
+</li>
+<li>
+<p>$age</p>
+</li>
+<li>
+<p>$male</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We can create new objects using the <strong>init</strong> constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$person</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Person&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-s2">&quot;John Smith&quot;</span><span class="tok-p">,</span> <span class="tok-n">23</span><span class="tok-p">,</span> <span class="tok-nv">$true</span><span class="tok-p">)</span> <span class="tok-p">}</span>
+
+<span class="tok-p">&gt;</span> <span class="tok-nv">$person</span>
+
+<span class="tok-n">name</span>       <span class="tok-n">age</span> <span class="tok-n">male</span>
+<span class="tok-p">----</span>       <span class="tok-p">---</span> <span class="tok-p">----</span>
+<span class="tok-n">John</span> <span class="tok-n">Smith</span>  <span class="tok-n">23</span> <span class="tok-n">True</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_2_2">Example 2</h4>
+<div class="paragraph">
+<p>Let&#8217;s rewrite <strong>IntCounter</strong> and <strong>ModularCounter</strong> classes to include only
+the constructor methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">=</span> <span class="tok-n">0</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span>
+
+<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-c"># Same as generated constructor, but with argument checks</span>
+    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+
+        <span class="tok-c"># Call generated constructor</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_gen_init</span><span class="tok-p">(</span><span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+
+        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$modulus</span> <span class="tok-o">-lt</span> <span class="tok-n">1</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+            <span class="tok-k">throw</span> <span class="tok-s2">&quot;ModularCounter: modulus bad&quot;</span>
+        <span class="tok-p">}</span>
+        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$value</span> <span class="tok-o">-lt</span> <span class="tok-n">0</span> <span class="tok-o">-or</span> <span class="tok-nv">$value</span> <span class="tok-o">-gt</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span> <span class="tok-p">{</span>
+            <span class="tok-k">throw</span> <span class="tok-s2">&quot;ModularCounter: value bad&quot;</span>
+        <span class="tok-p">}</span>
+    <span class="tok-p">}</span>
+
+    <span class="tok-c"># A simplified constructor</span>
+    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_init</span><span class="tok-p">(</span><span class="tok-n">0</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_intcounter">IntCounter</h5>
+<div class="paragraph">
+<p>The IntCounter&#8217;s generated constructor <strong>init</strong> accepts <code>[int] $value</code>
+parameter. The class also includes a parameterless constructor <strong>init0</strong>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_modularcounter_calls_other_constructors">ModularCounter calls other constructors</h5>
+<div class="paragraph">
+<p>The ModularCounter&#8217;s generated constructor <strong>init</strong> which accepts the
+parameters <code>[int] $value</code> and <code>[int] $modulus</code> is overridden by the
+custom <strong>init</strong> constructor. The custom init constructor calls the
+generated init constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_gen_init</span><span class="tok-p">(</span><span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The class also includes a parameterless constructor <strong>init0</strong> which calls
+the custom init constructor:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_init</span><span class="tok-p">(</span><span class="tok-n">0</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_3">Example 3</h4>
+<div class="paragraph">
+<p>The following classes are a part of an example which illustrates the
+chain of responsibility design pattern. For simplicity we have excluded
+non-constructor methods.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;HelpHandler&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[PSCustomObject] $successor, [string] $topic&#39;</span>
+
+<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Widget&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;HelpHandler&quot;</span> <span class="tok-s1">&#39;[PSCustomObject] $parent&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[PSCustomObject]</span> <span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-no">[string]</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span>
+
+        <span class="tok-c"># Widget&#39;s parent is HelpHandler&#39;s successor</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">HelpHandler_init</span><span class="tok-p">(</span><span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">parent</span> <span class="tok-p">=</span> <span class="tok-nv">$parent</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Widget&#8217;s init constructor calls the generated constructor of the
+HelpHandler <strong>superclass</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">HelpHandler_init</span><span class="tok-p">(</span><span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_object_creation">Object creation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>There are several ways to create new objects.</p>
+</li>
+<li>
+<p>The simplest way is to call function <strong>New</strong> (or alternatively <strong>New_</strong>).</p>
+</li>
+<li>
+<p>An alternative way is to call method <strong>new</strong> (or alternatively <strong>new_</strong> on
+the class object)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll illustrate creation of objects on the following simple class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[double] $x, [double] $y&#39;</span> <span class="tok-p">@{</span>
+
+    <span class="tok-n">translate</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[double]</span> <span class="tok-nv">$x</span><span class="tok-p">,</span> <span class="tok-no">[double]</span> <span class="tok-nv">$y</span><span class="tok-p">)</span>
+
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">x</span> <span class="tok-p">+=</span> <span class="tok-nv">$x</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">y</span> <span class="tok-p">+=</span> <span class="tok-nv">$y</span>
+    <span class="tok-p">}</span>
+
+    <span class="tok-n">scale</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[double]</span> <span class="tok-nv">$factor</span><span class="tok-p">)</span>
+
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">x</span> <span class="tok-p">*=</span> <span class="tok-nv">$factor</span>
+        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">y</span> <span class="tok-p">*=</span> <span class="tok-nv">$factor</span>
+    <span class="tok-p">}</span>
+<span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_new">New</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>The function New accepts two arguments:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>class name</p>
+</li>
+<li>
+<p>script block containing a constructor call</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-n">20</span><span class="tok-p">)</span> <span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here we supply a <strong>parameterless</strong> script block. When function <strong>New</strong> is
+executed it will create the <strong>$self</strong> object and then the call
+<code>$self.init(10, 20)</code> will be executed on this object.</p>
+</div>
+<div class="paragraph">
+<p>The function New expects that the supplied script block contains a
+constructor call on the object <strong>$self</strong>. If we use any other object it
+will not work.</p>
+</div>
+<div class="paragraph">
+<p>The way of object creation with function <strong>New</strong> will <strong>not</strong> work correctly
+within <strong>closures</strong>. For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$script</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
+    <span class="tok-p">...</span>
+    <span class="tok-c"># This will not work</span>
+    <span class="tok-nv">$point</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(-</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-p">-</span><span class="tok-n">50</span><span class="tok-p">)</span> <span class="tok-p">}</span>
+    <span class="tok-p">...</span>
+<span class="tok-p">}.</span><span class="tok-n">GetNewClosure</span><span class="tok-p">()</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_new_2">New_</h4>
+<div class="paragraph">
+<p>The function New_ is similar to New but it expects a script block with a
+<strong>single parameter</strong> representing the object being created and
+initialized. The parameter name is irrelevant.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point1</span> <span class="tok-p">=</span> <span class="tok-n">New_</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$self</span><span class="tok-p">)</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">30</span><span class="tok-p">,</span> <span class="tok-n">50</span><span class="tok-p">)</span> <span class="tok-p">}</span>
+
+<span class="tok-nv">$point2</span> <span class="tok-p">=</span> <span class="tok-n">New_</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$_</span><span class="tok-p">)</span> <span class="tok-nv">$_</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">25</span><span class="tok-p">,</span> <span class="tok-n">35</span><span class="tok-p">)</span> <span class="tok-p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The way of object creation with function <strong>New_</strong> will <strong>work</strong> correctly
+within <strong>closures</strong>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_class_object_methods">Using class object methods</h4>
+<div class="paragraph">
+<p>Instead of calling functions <strong>New</strong> or <strong>New_</strong> we can create objects by
+applying methods <strong>new</strong> or <strong>new_</strong> to the class object:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point1</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-n">20</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span>
+
+<span class="tok-nv">$point2</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new_</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$_</span><span class="tok-p">)</span> <span class="tok-nv">$_</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">5</span><span class="tok-p">,</span> <span class="tok-n">8</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
