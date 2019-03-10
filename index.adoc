@@ -14,7 +14,7 @@ versions earlier than 5.0.
 PSClasses include important *features* of object-oriented languages,
 like following:
 
-[cols="20h,80a",options="header"]
+[cols="20h,80a",options="header",width=97]
 |===
 ^| Feature ^| Example
 ^.^|class inheritance
@@ -23,7 +23,9 @@ like following:
 ----
 CreateClass "IntCounter" $null '[int] $value' @{ .. }
 
-CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{ .. }
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    ..
+}
 ----
 
 ^.^|overriding methods
@@ -113,12 +115,11 @@ of *Pester* tests.
 
 == Class creation
 
-* A class is created by calling *CreateClass* function.
-* The created class is represented by a *class object*.
-* A *variable* holding the class object is automatically created.
-* The *variable name* is formed like this: *`$<className>Class`*.
+A class is created by calling *CreateClass* function. The created class is
+represented by a *class object*. A *variable* holding the class object is
+automatically created. The *variable name* is formed like this: *`$<className>Class`*.
 
-The CreateClass function accepts following *arguments*:
+The *CreateClass* function accepts following *arguments*:
 
 [cols=",,",options="header",frame=none,grid=none,width=75%]
 |===

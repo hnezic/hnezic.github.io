@@ -564,7 +564,7 @@ versions earlier than 5.0.</p>
 <p>PSClasses include important <strong>features</strong> of object-oriented languages,
 like following:</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
+<table class="tableblock frame-all grid-all" style="width: 97%;">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -582,7 +582,9 @@ like following:</p>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span> <span class="tok-p">..</span> <span class="tok-p">}</span></code></pre>
+<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
+    <span class="tok-p">..</span>
+<span class="tok-p">}</span></code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -684,24 +686,13 @@ of <strong>Pester</strong> tests.</p>
 <div class="sect1">
 <h2 id="_class_creation">Class creation</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>A class is created by calling <strong>CreateClass</strong> function.</p>
-</li>
-<li>
-<p>The created class is represented by a <strong>class object</strong>.</p>
-</li>
-<li>
-<p>A <strong>variable</strong> holding the class object is automatically created.</p>
-</li>
-<li>
-<p>The <strong>variable name</strong> is formed like this: <strong><code>$&lt;className&gt;Class</code></strong>.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>A class is created by calling <strong>CreateClass</strong> function. The created class is
+represented by a <strong>class object</strong>. A <strong>variable</strong> holding the class object is
+automatically created. The <strong>variable name</strong> is formed like this: <strong><code>$&lt;className&gt;Class</code></strong>.</p>
 </div>
 <div class="paragraph">
-<p>The CreateClass function accepts following <strong>arguments</strong>:</p>
+<p>The <strong>CreateClass</strong> function accepts following <strong>arguments</strong>:</p>
 </div>
 <table class="tableblock frame-none grid-none" style="width: 75%;">
 <colgroup>
