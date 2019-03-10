@@ -32,9 +32,7 @@ of some features.
 The file *ClassGenerator_Test.ps1* contains numerous *examples* in form
 of *Pester* tests.
 
-== Usage
-
-=== Class creation
+== Class creation
 
 * A class is created by calling *CreateClass* function.
 * The created class is represented by a *class object*.
@@ -52,7 +50,7 @@ The CreateClass function accepts following *arguments*:
 |methods |-methods |no
 |===
 
-==== Example
+=== Example
 
 [source,powershell]
 ----
@@ -81,7 +79,7 @@ variables         : {name, age, male}
 ...
 ----
 
-=== Instance variables
+== Instance variables
 
 * Instance variables are specified as a *string* containing a
 comma-separated variable list along with *optional* type specifiers.
@@ -91,7 +89,7 @@ of the *generated constructor* named *init*.
 * Syntax is the same as syntax of function parameters or script block
 parameters.
 
-==== Examples
+=== Examples
 
 [source,powershell]
 ----
@@ -104,20 +102,20 @@ parameters.
 ''
 ----
 
-=== Methods
+== Methods
 
 * The methods are written as a *dictionary* of _(name, script block)_
 pairs.
 * The methods dictionary can be an unordered hashtable or ordered
 dictionary.
 
-==== Overriding methods
+=== Overriding methods
 
 * A derived class can *override* superclass methods.
 * Each overridden method is available in following form:
 *`<className>_<methodName>`*.
 
-==== Example
+=== Example
 
 [source,powershell]
 ----
@@ -155,7 +153,7 @@ ModularCounter class overrides *increment* method. The ModularCounter's
 $this.IntCounter_increment()
 ----
 
-=== Constructors
+== Constructors
 
 * Constructors are special *methods* whose names start with *init*.
 * A class can contain *multiple* constructors.
@@ -173,7 +171,7 @@ following forms:
 constructors)
 * *`<className>_gen_init`* (for calling the generated constructor)
 
-==== Generated constructor
+=== Generated constructor
 
 * The constructor named init is generated automatically.
 * It accepts arguments corresponding to all instance variables
@@ -184,7 +182,7 @@ constructors)
 called from other constructors as a method with following name:
 *`<className>_gen_init`*.
 
-==== Example 1
+=== Example 1
 
 Let's look at the example above which creates *Person* class. The
 Person's methods don't include custom constructors. The generated
@@ -208,7 +206,7 @@ name       age male
 John Smith  23 True
 ----
 
-==== Example 2
+=== Example 2
 
 Let's rewrite *IntCounter* and *ModularCounter* classes to include only
 the constructor methods:
@@ -248,12 +246,12 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 }
 ----
 
-===== IntCounter
+==== IntCounter
 
 The IntCounter's generated constructor *init* accepts `[int] $value`
 parameter. The class also includes a parameterless constructor *init0*.
 
-===== ModularCounter calls other constructors
+==== ModularCounter calls other constructors
 
 The ModularCounter's generated constructor *init* which accepts the
 parameters `[int] $value` and `[int] $modulus` is overridden by the
@@ -273,7 +271,7 @@ the custom init constructor:
 $this.ModularCounter_init(0, $modulus)
 ----
 
-==== Example 3
+=== Example 3
 
 The following classes are a part of an example which illustrates the
 chain of responsibility design pattern. For simplicity we have excluded
@@ -303,7 +301,7 @@ HelpHandler *superclass*:
 $this.HelpHandler_init($parent, $topic)
 ----
 
-=== Object creation
+== Object creation
 
 * There are several ways to create new objects.
 * The simplest way is to call function *New* (or alternatively *New_*).
@@ -332,7 +330,7 @@ CreateClass "Point" $null '[double] $x, [double] $y' @{
 }
 ----
 
-==== New
+=== New
 
 * The function New accepts two arguments:
 ** class name
@@ -366,7 +364,7 @@ $script = {
 }.GetNewClosure()
 ----
 
-==== New_
+=== New_
 
 The function New_ is similar to New but it expects a script block with a
 *single parameter* representing the object being created and
@@ -384,7 +382,7 @@ $point2 = New_ "Point" { param($_) $_.init(25, 35) }
 The way of object creation with function *New_* will *work* correctly
 within *closures*.
 
-==== Using class object methods
+=== Using class object methods
 
 Instead of calling functions *New* or *New_* we can create objects by
 applying methods *new* or *new_* to the class object:

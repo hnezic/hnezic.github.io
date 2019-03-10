@@ -513,30 +513,28 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#_overview">Overview</a></li>
-<li><a href="#_usage">Usage</a>
-<ul class="sectlevel2">
 <li><a href="#_class_creation">Class creation</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_example">Example</a></li>
 </ul>
 </li>
 <li><a href="#_instance_variables">Instance variables</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_examples">Examples</a></li>
 </ul>
 </li>
 <li><a href="#_methods">Methods</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_overriding_methods">Overriding methods</a></li>
 <li><a href="#_example_2">Example</a></li>
 </ul>
 </li>
 <li><a href="#_constructors">Constructors</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_generated_constructor">Generated constructor</a></li>
 <li><a href="#_example_1">Example 1</a></li>
 <li><a href="#_example_2_2">Example 2</a>
-<ul class="sectlevel4">
+<ul class="sectlevel3">
 <li><a href="#_intcounter">IntCounter</a></li>
 <li><a href="#_modularcounter_calls_other_constructors">ModularCounter calls other constructors</a></li>
 </ul>
@@ -545,12 +543,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_object_creation">Object creation</a>
-<ul class="sectlevel3">
+<ul class="sectlevel2">
 <li><a href="#_new">New</a></li>
 <li><a href="#_new_2">New_</a></li>
 <li><a href="#_using_class_object_methods">Using class object methods</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -607,10 +603,8 @@ of <strong>Pester</strong> tests.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_usage">Usage</h2>
+<h2 id="_class_creation">Class creation</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="_class_creation">Class creation</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -666,8 +660,8 @@ of <strong>Pester</strong> tests.</p>
 </tr>
 </tbody>
 </table>
-<div class="sect3">
-<h4 id="_example">Example</h4>
+<div class="sect2">
+<h3 id="_example">Example</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Person&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span> <span class="tok-p">@{</span>
@@ -698,8 +692,10 @@ of <strong>Pester</strong> tests.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_instance_variables">Instance variables</h3>
+</div>
+<div class="sect1">
+<h2 id="_instance_variables">Instance variables</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -719,8 +715,8 @@ parameters.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="_examples">Examples</h4>
+<div class="sect2">
+<h3 id="_examples">Examples</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span>
@@ -734,8 +730,10 @@ parameters.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_methods">Methods</h3>
+</div>
+<div class="sect1">
+<h2 id="_methods">Methods</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -748,8 +746,8 @@ dictionary.</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="_overriding_methods">Overriding methods</h4>
+<div class="sect2">
+<h3 id="_overriding_methods">Overriding methods</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -762,8 +760,8 @@ dictionary.</p>
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_2">Example</h4>
+<div class="sect2">
+<h3 id="_example_2">Example</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
@@ -803,8 +801,10 @@ dictionary.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_constructors">Constructors</h3>
+</div>
+<div class="sect1">
+<h2 id="_constructors">Constructors</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -844,8 +844,8 @@ constructors)</p>
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="_generated_constructor">Generated constructor</h4>
+<div class="sect2">
+<h3 id="_generated_constructor">Generated constructor</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -869,8 +869,8 @@ called from other constructors as a method with following name:
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_1">Example 1</h4>
+<div class="sect2">
+<h3 id="_example_1">Example 1</h3>
 <div class="paragraph">
 <p>Let&#8217;s look at the example above which creates <strong>Person</strong> class. The
 Person&#8217;s methods don&#8217;t include custom constructors. The generated
@@ -905,8 +905,8 @@ correspond to instance variables:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_2_2">Example 2</h4>
+<div class="sect2">
+<h3 id="_example_2_2">Example 2</h3>
 <div class="paragraph">
 <p>Let&#8217;s rewrite <strong>IntCounter</strong> and <strong>ModularCounter</strong> classes to include only
 the constructor methods:</p>
@@ -946,15 +946,15 @@ the constructor methods:</p>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_intcounter">IntCounter</h5>
+<div class="sect3">
+<h4 id="_intcounter">IntCounter</h4>
 <div class="paragraph">
 <p>The IntCounter&#8217;s generated constructor <strong>init</strong> accepts <code>[int] $value</code>
 parameter. The class also includes a parameterless constructor <strong>init0</strong>.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_modularcounter_calls_other_constructors">ModularCounter calls other constructors</h5>
+<div class="sect3">
+<h4 id="_modularcounter_calls_other_constructors">ModularCounter calls other constructors</h4>
 <div class="paragraph">
 <p>The ModularCounter&#8217;s generated constructor <strong>init</strong> which accepts the
 parameters <code>[int] $value</code> and <code>[int] $modulus</code> is overridden by the
@@ -977,8 +977,8 @@ the custom init constructor:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_example_3">Example 3</h4>
+<div class="sect2">
+<h3 id="_example_3">Example 3</h3>
 <div class="paragraph">
 <p>The following classes are a part of an example which illustrates the
 chain of responsibility design pattern. For simplicity we have excluded
@@ -1011,8 +1011,10 @@ HelpHandler <strong>superclass</strong>:</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_object_creation">Object creation</h3>
+</div>
+<div class="sect1">
+<h2 id="_object_creation">Object creation</h2>
+<div class="sectionbody">
 <div class="ulist">
 <ul>
 <li>
@@ -1050,8 +1052,8 @@ the class object)</p>
 <span class="tok-p">}</span></code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_new">New</h4>
+<div class="sect2">
+<h3 id="_new">New</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -1102,8 +1104,8 @@ within <strong>closures</strong>. For example:</p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_new_2">New_</h4>
+<div class="sect2">
+<h3 id="_new_2">New_</h3>
 <div class="paragraph">
 <p>The function New_ is similar to New but it expects a script block with a
 <strong>single parameter</strong> representing the object being created and
@@ -1124,8 +1126,8 @@ initialized. The parameter name is irrelevant.</p>
 within <strong>closures</strong>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_using_class_object_methods">Using class object methods</h4>
+<div class="sect2">
+<h3 id="_using_class_object_methods">Using class object methods</h3>
 <div class="paragraph">
 <p>Instead of calling functions <strong>New</strong> or <strong>New_</strong> we can create objects by
 applying methods <strong>new</strong> or <strong>new_</strong> to the class object:</p>
@@ -1135,7 +1137,6 @@ applying methods <strong>new</strong> or <strong>new_</strong> to the class obje
 <pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point1</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-n">20</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span>
 
 <span class="tok-nv">$point2</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new_</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$_</span><span class="tok-p">)</span> <span class="tok-nv">$_</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">5</span><span class="tok-p">,</span> <span class="tok-n">8</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span></code></pre>
-</div>
 </div>
 </div>
 </div>
