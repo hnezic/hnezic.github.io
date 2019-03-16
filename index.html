@@ -695,36 +695,48 @@ variables         : {name, age, male}
 <div class="sect1">
 <h2 id="_instance_variables">Instance variables</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p>Instance variables are specified as a <strong>string</strong> containing a
-comma-separated variable list along with <strong>optional</strong> type specifiers.</p>
-</li>
-<li>
-<p>The string containing instance variables is also used for parameters
-of the <strong>generated constructor</strong> named <strong>init</strong>.</p>
-</li>
-<li>
-<p>The string is <strong>parsed</strong> and the variable names extracted.</p>
-</li>
-<li>
-<p>Syntax is the same as syntax of function parameters or script block
+comma-separated variable list along with optional <strong>type specifiers</strong>.
+The string is <strong>parsed</strong> and the variable names extracted.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The string containing instance variables is also used for <strong>parameters</strong>
+of the <strong>generated constructor</strong> named <strong>init</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <strong>syntax</strong> is the same as syntax of function parameters or script block
 parameters.</p>
-</li>
-</ul>
 </div>
 <div class="sect2">
 <h3 id="_examples">Examples</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">'[string] $name, [int] $age, [boolean] $male'
-
-'[PSCustomObject] $successor, [string] $topic'
-
-'$drive, $certSubject, $certAccount'
-
-''</code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">'[string] $name, [int] $age, [boolean] $male'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">'[PSCustomObject] $successor, [string] $topic'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">'$drive, $certSubject, $certAccount'</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">''</code></pre>
 </div>
 </div>
 </div>

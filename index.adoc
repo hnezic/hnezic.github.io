@@ -161,12 +161,14 @@ variables         : {name, age, male}
 
 == Instance variables
 
-* Instance variables are specified as a *string* containing a
-comma-separated variable list along with *optional* type specifiers.
-* The string containing instance variables is also used for parameters
+Instance variables are specified as a *string* containing a
+comma-separated variable list along with optional *type specifiers*.
+The string is *parsed* and the variable names extracted.
+
+NOTE: The string containing instance variables is also used for *parameters*
 of the *generated constructor* named *init*.
-* The string is *parsed* and the variable names extracted.
-* Syntax is the same as syntax of function parameters or script block
+
+*Syntax* is the same as syntax of function parameters or script block
 parameters.
 
 === Examples
@@ -174,11 +176,20 @@ parameters.
 [source,powershell]
 ----
 '[string] $name, [int] $age, [boolean] $male'
+----
 
+[source,powershell]
+----
 '[PSCustomObject] $successor, [string] $topic'
+----
 
+[source,powershell]
+----
 '$drive, $certSubject, $certAccount'
+----
 
+[source,powershell]
+----
 ''
 ----
 
