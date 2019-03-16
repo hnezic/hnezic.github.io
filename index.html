@@ -484,7 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The PSClasses project provides classes with inheritance to PowerShell
+<p>The <a href="https://github.com/hnezic/PSClasses">PSClasses</a> project provides classes with inheritance to PowerShell
 versions earlier than 5.0.</p>
 </div>
 <div class="paragraph">
@@ -549,10 +549,13 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
-    init = { .. }
+    init = { param([int] $value, [int] $modulus) .. }
 
-    init0 = { .. }
-}</code></pre>
+    init0 = { param([int] $modulus) .. }
+}
+
+$modCounter = New "ModularCounter" { $self.init(6, 10) }
+$modCounter2 = New "ModularCounter" { $self.init0(20) }</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -595,18 +598,56 @@ CreateClass "BoundedCounter" -extends "IntCounter" '[int] $bound' @{
 </tbody>
 </table>
 <div class="paragraph">
-<p>The PSClasses library also contain an uncommon feature: implicit <strong>generation</strong> of the
-constructor which accepts arguments corresponding to all instance
-variables. This feature resembles <em>case classes</em> in Scala or <em>data
-classes</em> in Kotlin.</p>
+<p>The PSClasses library also contain an uncommon feature: automatic
+<strong>generation</strong> of the <strong>constructor</strong> which accepts arguments corresponding
+to all instance variables. This feature resembles <em>case classes</em>
+in Scala or <em>data classes</em> in Kotlin:</p>
 </div>
-<div class="paragraph">
-<p>The project includes a simple <strong>template engine</strong> used in implementation
-of some features.</p>
+<table class="tableblock frame-all grid-all" style="width: 96%;">
+<colgroup>
+<col style="width: 21%;">
+<col style="width: 79%;">
+</colgroup>
+<tbody>
+<tr>
+<th class="tableblock halign-center valign-middle"><p class="tableblock">generated constructor</p></th>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Config" $null '$drive, $certSubject, $certAccount'
+
+# Constructor 'init' is automatically generated
+
+$config = New "Config" { $self.init("C:", "CN=jsmith", "jsmith") }</code></pre>
 </div>
-<div class="paragraph">
-<p>The file <strong>ClassGenerator_Test.ps1</strong> contains numerous <strong>examples</strong> in form
-of <strong>Pester</strong> tests.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The file <a href="https://github.com/hnezic/PSClasses/blob/master/ClassGenerator_Test.ps1">ClassGenerator_Test.ps1</a> contains numerous <strong>examples</strong> in form
+of <strong>Pester</strong> tests.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The project includes a simple <strong>template engine</strong> used in implementation
+of some features.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -614,7 +655,7 @@ of <strong>Pester</strong> tests.</p>
 <h2 id="_class_creation">Class creation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A class is created by calling <strong>CreateClass</strong> function. The created class is
+<p>We can create a class by calling <strong>CreateClass</strong> function. The created class is
 represented by a <strong>class object</strong>. A <strong>variable</strong> holding the class object is
 automatically created. The <strong>variable name</strong> is formed like this: <strong><code>$&lt;className&gt;Class</code></strong>.</p>
 </div>

@@ -5,10 +5,12 @@ Hrvoje Nezic
 :toc: left
 :toclevels: 4
 :nofooter:
+:psClasses: https://github.com/hnezic/PSClasses[PSClasses]
+:psClassesTests: https://github.com/hnezic/PSClasses/blob/master/ClassGenerator_Test.ps1[ClassGenerator_Test.ps1]
 
 == Overview
 
-The PSClasses project provides classes with inheritance to PowerShell
+The {psClasses} project provides classes with inheritance to PowerShell
 versions earlier than 5.0.
 
 PSClasses include important *features* of object-oriented languages,
@@ -60,10 +62,13 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 | [source,powershell]
 ----
 CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
-    init = { .. }
+    init = { param([int] $value, [int] $modulus) .. }
 
-    init0 = { .. }
+    init0 = { param([int] $modulus) .. }
 }
+
+$modCounter = New "ModularCounter" { $self.init(6, 10) }
+$modCounter2 = New "ModularCounter" { $self.init0(20) }
 ----
 
 ^.^|calling other constructors of same class
@@ -102,20 +107,33 @@ CreateClass "BoundedCounter" -extends "IntCounter" '[int] $bound' @{
 
 |===
 
-The PSClasses library also contain an uncommon feature: implicit *generation* of the
-constructor which accepts arguments corresponding to all instance
-variables. This feature resembles _case classes_ in Scala or _data
-classes_ in Kotlin.
+The PSClasses library also contain an uncommon feature: automatic 
+*generation* of the *constructor* which accepts arguments corresponding 
+to all instance variables. This feature resembles _case classes_ 
+in Scala or _data classes_ in Kotlin:
 
-The project includes a simple *template engine* used in implementation
-of some features.
+[cols="21h,79a",width=96]
+|===
+^.^|generated constructor
+| [source,powershell]
+----
+CreateClass "Config" $null '$drive, $certSubject, $certAccount'
 
-The file *ClassGenerator_Test.ps1* contains numerous *examples* in form
+# Constructor 'init' is automatically generated
+
+$config = New "Config" { $self.init("C:", "CN=jsmith", "jsmith") }
+----
+|===
+
+NOTE: The file {psClassesTests} contains numerous *examples* in form
 of *Pester* tests.
+
+NOTE: The project includes a simple *template engine* used in implementation
+of some features.
 
 == Class creation
 
-A class is created by calling *CreateClass* function. The created class is
+We can create a class by calling *CreateClass* function. The created class is
 represented by a *class object*. A *variable* holding the class object is
 automatically created. The *variable name* is formed like this: *`$<className>Class`*.
 
