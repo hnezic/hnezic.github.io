@@ -184,15 +184,15 @@ parameters.
 
 == Methods
 
-* The methods are written as a *dictionary* of _(name, script block)_
-pairs.
-* The methods dictionary can be an unordered hashtable or ordered
-dictionary.
+The methods are written as a *dictionary* of _(name, script block)_
+pairs. The methods dictionary can be an *unordered* hashtable or 
+*ordered* dictionary.
 
 === Overriding methods
 
-* A derived class can *override* superclass methods.
-* Each overridden method is available in following form:
+A derived class can *override* superclass methods.
+
+NOTE: Each overridden method is available in following form:
 *`<className>_<methodName>`*.
 
 === Example
@@ -225,7 +225,7 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 }
 ----
 
-ModularCounter class overrides *increment* method. The ModularCounter's
+The ModularCounter class overrides *increment* method. The ModularCounter's
 *increment* method calls the superclass version:
 
 [source,powershell]
@@ -235,32 +235,40 @@ $this.IntCounter_increment()
 
 == Constructors
 
-* Constructors are special *methods* whose names start with *init*.
-* A class can contain *multiple* constructors.
-
+Constructors are special *methods* whose names start with *init*.
+A class can contain *multiple* constructors.
 Each constructor can call:
 
-* any other constructor of the *same class*, including the generated
+* any other constructor of the *same class*, including the *generated*
 constructor
 * any *superclass* constructor
 
+[NOTE]
+====
 When a custom constructor calls other constructors it must use one of
 following forms:
 
 * *`<className>_<constructorName>`* (for calling other custom
 constructors)
 * *`<className>_gen_init`* (for calling the generated constructor)
+====
 
 === Generated constructor
 
-* The constructor named init is generated automatically.
-* It accepts arguments corresponding to all instance variables
-(including instance variables declared in superclasses).
-* It copies the arguments into instance variables.
-* The generated constructor can be overridden by a custom constructor.
-* If overridden, the generated constructor is still available to be
+The constructor named *init* is generated automatically.
+It accepts arguments corresponding to all instance variables
+(including instance variables declared in superclasses)
+and just copies the arguments into instance variables.
+
+[NOTE]
+====
+The generated constructor can be *overridden* by a custom *init* 
+constructor.
+
+If overridden, the generated constructor is still available to be
 called from other constructors as a method with following name:
 *`<className>_gen_init`*.
+====
 
 === Example 1
 
@@ -383,7 +391,10 @@ $this.HelpHandler_init($parent, $topic)
 
 == Object creation
 
-There are several ways to create new objects. The simplest way is to call the function *New* (or alternatively *New_*). An alternative way is to call the method *new* (or alternatively *new_* on the class object).
+There are several ways to create new objects. The simplest way is to call 
+the function *New* (or alternatively *New_*). 
+Another way is to call the method *new* (or alternatively *new_*) 
+on the class object).
 
 Let's illustrate creation of objects on the following simple class:
 

@@ -733,30 +733,28 @@ parameters.</p>
 <div class="sect1">
 <h2 id="_methods">Methods</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p>The methods are written as a <strong>dictionary</strong> of <em>(name, script block)</em>
-pairs.</p>
-</li>
-<li>
-<p>The methods dictionary can be an unordered hashtable or ordered
-dictionary.</p>
-</li>
-</ul>
+pairs. The methods dictionary can be an <strong>unordered</strong> hashtable or
+<strong>ordered</strong> dictionary.</p>
 </div>
 <div class="sect2">
 <h3 id="_overriding_methods">Overriding methods</h3>
-<div class="ulist">
-<ul>
-<li>
+<div class="paragraph">
 <p>A derived class can <strong>override</strong> superclass methods.</p>
-</li>
-<li>
-<p>Each overridden method is available in following form:
-<strong><code>&lt;className&gt;_&lt;methodName&gt;</code></strong>.</p>
-</li>
-</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Each overridden method is available in following form:
+<strong><code>&lt;className&gt;_&lt;methodName&gt;</code></strong>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -790,7 +788,7 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 </div>
 </div>
 <div class="paragraph">
-<p>ModularCounter class overrides <strong>increment</strong> method. The ModularCounter&#8217;s
+<p>The ModularCounter class overrides <strong>increment</strong> method. The ModularCounter&#8217;s
 <strong>increment</strong> method calls the superclass version:</p>
 </div>
 <div class="listingblock">
@@ -804,23 +802,15 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 <div class="sect1">
 <h2 id="_constructors">Constructors</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>Constructors are special <strong>methods</strong> whose names start with <strong>init</strong>.</p>
-</li>
-<li>
-<p>A class can contain <strong>multiple</strong> constructors.</p>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>Each constructor can call:</p>
+<p>Constructors are special <strong>methods</strong> whose names start with <strong>init</strong>.
+A class can contain <strong>multiple</strong> constructors.
+Each constructor can call:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>any other constructor of the <strong>same class</strong>, including the generated
+<p>any other constructor of the <strong>same class</strong>, including the <strong>generated</strong>
 constructor</p>
 </li>
 <li>
@@ -828,6 +818,13 @@ constructor</p>
 </li>
 </ul>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
 <div class="paragraph">
 <p>When a custom constructor calls other constructors it must use one of
 following forms:</p>
@@ -843,29 +840,37 @@ constructors)</p>
 </li>
 </ul>
 </div>
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="_generated_constructor">Generated constructor</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>The constructor named init is generated automatically.</p>
-</li>
-<li>
-<p>It accepts arguments corresponding to all instance variables
-(including instance variables declared in superclasses).</p>
-</li>
-<li>
-<p>It copies the arguments into instance variables.</p>
-</li>
-<li>
-<p>The generated constructor can be overridden by a custom constructor.</p>
-</li>
-<li>
+<div class="paragraph">
+<p>The constructor named <strong>init</strong> is generated automatically.
+It accepts arguments corresponding to all instance variables
+(including instance variables declared in superclasses)
+and just copies the arguments into instance variables.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The generated constructor can be <strong>overridden</strong> by a custom <strong>init</strong>
+constructor.</p>
+</div>
+<div class="paragraph">
 <p>If overridden, the generated constructor is still available to be
 called from other constructors as a method with following name:
 <strong><code>&lt;className&gt;_gen_init</code></strong>.</p>
-</li>
-</ul>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -1015,7 +1020,10 @@ HelpHandler <strong>superclass</strong>:</p>
 <h2 id="_object_creation">Object creation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are several ways to create new objects. The simplest way is to call the function <strong>New</strong> (or alternatively <strong>New_</strong>). An alternative way is to call the method <strong>new</strong> (or alternatively <strong>new_</strong> on the class object).</p>
+<p>There are several ways to create new objects. The simplest way is to call
+the function <strong>New</strong> (or alternatively <strong>New_</strong>).
+Another way is to call the method <strong>new</strong> (or alternatively <strong>new_</strong>)
+on the class object).</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s illustrate creation of objects on the following simple class:</p>
