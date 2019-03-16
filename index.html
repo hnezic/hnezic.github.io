@@ -431,77 +431,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-.listingblock .pygments .hll { background-color: #ffffcc }
-.listingblock .pygments, .listingblock .pygments code { background: #f8f8f8; }
-.listingblock .pygments .tok-c { color: #408080; font-style: italic } /* Comment */
-.listingblock .pygments .tok-err { border: 1px solid #FF0000 } /* Error */
-.listingblock .pygments .tok-k { color: #008000; font-weight: bold } /* Keyword */
-.listingblock .pygments .tok-o { color: #666666 } /* Operator */
-.listingblock .pygments .tok-ch { color: #408080; font-style: italic } /* Comment.Hashbang */
-.listingblock .pygments .tok-cm { color: #408080; font-style: italic } /* Comment.Multiline */
-.listingblock .pygments .tok-cp { color: #BC7A00 } /* Comment.Preproc */
-.listingblock .pygments .tok-cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
-.listingblock .pygments .tok-c1 { color: #408080; font-style: italic } /* Comment.Single */
-.listingblock .pygments .tok-cs { color: #408080; font-style: italic } /* Comment.Special */
-.listingblock .pygments .tok-gd { color: #A00000 } /* Generic.Deleted */
-.listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
-.listingblock .pygments .tok-gr { color: #FF0000 } /* Generic.Error */
-.listingblock .pygments .tok-gh { color: #000080; font-weight: bold } /* Generic.Heading */
-.listingblock .pygments .tok-gi { color: #00A000 } /* Generic.Inserted */
-.listingblock .pygments .tok-go { color: #888888 } /* Generic.Output */
-.listingblock .pygments .tok-gp { color: #000080; font-weight: bold } /* Generic.Prompt */
-.listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
-.listingblock .pygments .tok-gu { color: #800080; font-weight: bold } /* Generic.Subheading */
-.listingblock .pygments .tok-gt { color: #0044DD } /* Generic.Traceback */
-.listingblock .pygments .tok-kc { color: #008000; font-weight: bold } /* Keyword.Constant */
-.listingblock .pygments .tok-kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
-.listingblock .pygments .tok-kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
-.listingblock .pygments .tok-kp { color: #008000 } /* Keyword.Pseudo */
-.listingblock .pygments .tok-kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
-.listingblock .pygments .tok-kt { color: #B00040 } /* Keyword.Type */
-.listingblock .pygments .tok-m { color: #666666 } /* Literal.Number */
-.listingblock .pygments .tok-s { color: #BA2121 } /* Literal.String */
-.listingblock .pygments .tok-na { color: #7D9029 } /* Name.Attribute */
-.listingblock .pygments .tok-nb { color: #008000 } /* Name.Builtin */
-.listingblock .pygments .tok-nc { color: #0000FF; font-weight: bold } /* Name.Class */
-.listingblock .pygments .tok-no { color: #880000 } /* Name.Constant */
-.listingblock .pygments .tok-nd { color: #AA22FF } /* Name.Decorator */
-.listingblock .pygments .tok-ni { color: #999999; font-weight: bold } /* Name.Entity */
-.listingblock .pygments .tok-ne { color: #D2413A; font-weight: bold } /* Name.Exception */
-.listingblock .pygments .tok-nf { color: #0000FF } /* Name.Function */
-.listingblock .pygments .tok-nl { color: #A0A000 } /* Name.Label */
-.listingblock .pygments .tok-nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
-.listingblock .pygments .tok-nt { color: #008000; font-weight: bold } /* Name.Tag */
-.listingblock .pygments .tok-nv { color: #19177C } /* Name.Variable */
-.listingblock .pygments .tok-ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
-.listingblock .pygments .tok-w { color: #bbbbbb } /* Text.Whitespace */
-.listingblock .pygments .tok-mb { color: #666666 } /* Literal.Number.Bin */
-.listingblock .pygments .tok-mf { color: #666666 } /* Literal.Number.Float */
-.listingblock .pygments .tok-mh { color: #666666 } /* Literal.Number.Hex */
-.listingblock .pygments .tok-mi { color: #666666 } /* Literal.Number.Integer */
-.listingblock .pygments .tok-mo { color: #666666 } /* Literal.Number.Oct */
-.listingblock .pygments .tok-sa { color: #BA2121 } /* Literal.String.Affix */
-.listingblock .pygments .tok-sb { color: #BA2121 } /* Literal.String.Backtick */
-.listingblock .pygments .tok-sc { color: #BA2121 } /* Literal.String.Char */
-.listingblock .pygments .tok-dl { color: #BA2121 } /* Literal.String.Delimiter */
-.listingblock .pygments .tok-sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
-.listingblock .pygments .tok-s2 { color: #BA2121 } /* Literal.String.Double */
-.listingblock .pygments .tok-se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
-.listingblock .pygments .tok-sh { color: #BA2121 } /* Literal.String.Heredoc */
-.listingblock .pygments .tok-si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
-.listingblock .pygments .tok-sx { color: #008000 } /* Literal.String.Other */
-.listingblock .pygments .tok-sr { color: #BB6688 } /* Literal.String.Regex */
-.listingblock .pygments .tok-s1 { color: #BA2121 } /* Literal.String.Single */
-.listingblock .pygments .tok-ss { color: #19177C } /* Literal.String.Symbol */
-.listingblock .pygments .tok-bp { color: #008000 } /* Name.Builtin.Pseudo */
-.listingblock .pygments .tok-fm { color: #0000FF } /* Name.Function.Magic */
-.listingblock .pygments .tok-vc { color: #19177C } /* Name.Variable.Class */
-.listingblock .pygments .tok-vg { color: #19177C } /* Name.Variable.Global */
-.listingblock .pygments .tok-vi { color: #19177C } /* Name.Variable.Instance */
-.listingblock .pygments .tok-vm { color: #19177C } /* Name.Variable.Magic */
-.listingblock .pygments .tok-il { color: #666666 } /* Literal.Number.Integer.Long */
-</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
@@ -564,10 +493,10 @@ versions earlier than 5.0.</p>
 <p>PSClasses include important <strong>features</strong> of object-oriented languages,
 like following:</p>
 </div>
-<table class="tableblock frame-all grid-all" style="width: 97%;">
+<table class="tableblock frame-all grid-all" style="width: 96%;">
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
+<col style="width: 21%;">
+<col style="width: 79%;">
 </colgroup>
 <thead>
 <tr>
@@ -580,11 +509,11 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">class inheritance</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{ .. }
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-p">..</span>
-<span class="tok-p">}</span></code></pre>
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    ..
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -592,13 +521,13 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">overriding methods</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
-<span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{
+    increment = { .. }
+}
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    increment = { .. }
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -606,14 +535,14 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">calling overridden superclass methods</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span> <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span> <span class="tok-p">..</span> <span class="tok-p">}</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{ increment = { .. } }
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_increment</span><span class="tok-p">()</span>
-        <span class="tok-p">..</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    increment = {
+        $this.IntCounter_increment()
+        ..
+    }
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -621,11 +550,11 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">multiple constructors</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    init = { .. }
 
-    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+    init0 = { .. }
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -633,17 +562,17 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">calling other constructors of same class</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
-    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
-        <span class="tok-p">..</span>
-    <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+    init = {
+        param([int] $value, [int] $modulus)
+        ..
+    }
 
-    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_init</span><span class="tok-p">(</span><span class="tok-n">0</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+    init0 = {
+        param([int] $modulus)
+        $this.ModularCounter_init(0, $modulus)
+    }
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -651,17 +580,17 @@ like following:</p>
 <th class="tableblock halign-center valign-middle"><p class="tableblock">calling superclass constructors</p></th>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span>    <span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span> <span class="tok-p">..</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{ .. }
 
-    <span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;BoundedCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $bound&#39;</span> <span class="tok-p">@{</span>
-        <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-            <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$bound</span><span class="tok-p">)</span>
+CreateClass "BoundedCounter" -extends "IntCounter" '[int] $bound' @{
+    init = {
+        param([int] $value, [int] $bound)
 
-            <span class="tok-c"># Call generated constructor &quot;init&quot; of superclass</span>
-            <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_init</span><span class="tok-p">(</span><span class="tok-nv">$value</span><span class="tok-p">)</span>
-            <span class="tok-p">..</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">}</span></code></pre>
+        # Call generated constructor "init" of superclass
+        $this.IntCounter_init($value)
+        ..
+    }
+}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -734,16 +663,16 @@ automatically created. The <strong>variable name</strong> is formed like this: <
 <h3 id="_example">Example</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Person&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span> <span class="tok-p">@{</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Person" $null '[string] $name, [int] $age, [boolean] $male' @{
 
-    <span class="tok-n">reportAge</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-s2">&quot;My age is </span><span class="tok-p">$(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">age</span><span class="tok-p">)</span><span class="tok-s2">&quot;</span>
-    <span class="tok-p">}</span>
+    reportAge = {
+        "My age is $($this.age)"
+    }
 
-    <span class="tok-n">reportName</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-s2">&quot;My name is </span><span class="tok-p">$(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">name</span><span class="tok-p">)</span><span class="tok-s2">&quot;</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+    reportName = {
+        "My name is $($this.name)"
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -751,13 +680,13 @@ automatically created. The <strong>variable name</strong> is formed like this: <
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-p">&gt;</span> <span class="tok-nv">$PersonClass</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">&gt; $PersonClass
 
-<span class="tok-n">className</span>         <span class="tok-err">:</span> <span class="tok-n">Person</span>
-<span class="tok-n">super</span>             <span class="tok-err">:</span>
-<span class="tok-n">allVariablesStr</span>   <span class="tok-err">:</span> <span class="tok-no">[string]</span> <span class="tok-nv">$name</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$age</span><span class="tok-p">,</span> <span class="tok-no">[boolean]</span> <span class="tok-nv">$male</span>
-<span class="tok-n">variables</span>         <span class="tok-err">:</span> <span class="tok-p">{</span><span class="tok-n">name</span><span class="tok-p">,</span> <span class="tok-n">age</span><span class="tok-p">,</span> <span class="tok-n">male</span><span class="tok-p">}</span>
-<span class="tok-p">...</span></code></pre>
+className         : Person
+super             :
+allVariablesStr   : [string] $name, [int] $age, [boolean] $male
+variables         : {name, age, male}
+...</code></pre>
 </div>
 </div>
 </div>
@@ -789,13 +718,13 @@ parameters.</p>
 <h3 id="_examples">Examples</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-s1">&#39;[string] $name, [int] $age, [boolean] $male&#39;</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">'[string] $name, [int] $age, [boolean] $male'
 
-<span class="tok-s1">&#39;[PSCustomObject] $successor, [string] $topic&#39;</span>
+'[PSCustomObject] $successor, [string] $topic'
 
-<span class="tok-s1">&#39;$drive, $certSubject, $certAccount&#39;</span>
+'$drive, $certSubject, $certAccount'
 
-<span class="tok-s1">&#39;&#39;</span></code></pre>
+''</code></pre>
 </div>
 </div>
 </div>
@@ -834,30 +763,30 @@ dictionary.</p>
 <h3 id="_example_2">Example</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{
 
-    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">+=</span> <span class="tok-n">1</span>
-    <span class="tok-p">}</span>
+    increment = {
+        $this.value += 1
+    }
 
-    <span class="tok-n">reset</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">=</span> <span class="tok-n">0</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span>
+    reset = {
+        $this.value = 0
+    }
+}
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 
-    <span class="tok-c"># Override superclass method</span>
-    <span class="tok-n">increment</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-o">-eq</span> <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">modulus</span> <span class="tok-p">-</span> <span class="tok-n">1</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-            <span class="tok-c"># Call inherited method</span>
-            <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">reset</span><span class="tok-p">()</span>
-        <span class="tok-p">}</span> <span class="tok-k">Else</span> <span class="tok-p">{</span>
-            <span class="tok-c"># Call superclass version</span>
-            <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_increment</span><span class="tok-p">()</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+    # Override superclass method
+    increment = {
+        If ($this.value -eq $this.modulus - 1) {
+            # Call inherited method
+            $this.reset()
+        } Else {
+            # Call superclass version
+            $this.IntCounter_increment()
+        }
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -866,7 +795,7 @@ dictionary.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">IntCounter_increment</span><span class="tok-p">()</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$this.IntCounter_increment()</code></pre>
 </div>
 </div>
 </div>
@@ -965,13 +894,13 @@ correspond to instance variables:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$person</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Person&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-s2">&quot;John Smith&quot;</span><span class="tok-p">,</span> <span class="tok-n">23</span><span class="tok-p">,</span> <span class="tok-nv">$true</span><span class="tok-p">)</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$person = New "Person" { $self.init("John Smith", 23, $true) }
 
-<span class="tok-p">&gt;</span> <span class="tok-nv">$person</span>
+&gt; $person
 
-<span class="tok-n">name</span>       <span class="tok-n">age</span> <span class="tok-n">male</span>
-<span class="tok-p">----</span>       <span class="tok-p">---</span> <span class="tok-p">----</span>
-<span class="tok-n">John</span> <span class="tok-n">Smith</span>  <span class="tok-n">23</span> <span class="tok-n">True</span></code></pre>
+name       age male
+----       --- ----
+John Smith  23 True</code></pre>
 </div>
 </div>
 </div>
@@ -983,37 +912,37 @@ the constructor methods:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[int] $value&#39;</span> <span class="tok-p">@{</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{
 
-    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">value</span> <span class="tok-p">=</span> <span class="tok-n">0</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span>
+    init0 = {
+        $this.value = 0
+    }
+}
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;ModularCounter&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;IntCounter&quot;</span> <span class="tok-s1">&#39;[int] $modulus&#39;</span> <span class="tok-p">@{</span>
+CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 
-    <span class="tok-c"># Same as generated constructor, but with argument checks</span>
-    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+    # Same as generated constructor, but with argument checks
+    init = {
+        param([int] $value, [int] $modulus)
 
-        <span class="tok-c"># Call generated constructor</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_gen_init</span><span class="tok-p">(</span><span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+        # Call generated constructor
+        $this.ModularCounter_gen_init($value, $modulus)
 
-        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$modulus</span> <span class="tok-o">-lt</span> <span class="tok-n">1</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-            <span class="tok-k">throw</span> <span class="tok-s2">&quot;ModularCounter: modulus bad&quot;</span>
-        <span class="tok-p">}</span>
-        <span class="tok-k">If</span> <span class="tok-p">(</span><span class="tok-nv">$value</span> <span class="tok-o">-lt</span> <span class="tok-n">0</span> <span class="tok-o">-or</span> <span class="tok-nv">$value</span> <span class="tok-o">-gt</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span> <span class="tok-p">{</span>
-            <span class="tok-k">throw</span> <span class="tok-s2">&quot;ModularCounter: value bad&quot;</span>
-        <span class="tok-p">}</span>
-    <span class="tok-p">}</span>
+        If ($modulus -lt 1) {
+            throw "ModularCounter: modulus bad"
+        }
+        If ($value -lt 0 -or $value -gt $modulus) {
+            throw "ModularCounter: value bad"
+        }
+    }
 
-    <span class="tok-c"># A simplified constructor</span>
-    <span class="tok-n">init0</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[int]</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
+    # A simplified constructor
+    init0 = {
+        param([int] $modulus)
 
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_init</span><span class="tok-p">(</span><span class="tok-n">0</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+        $this.ModularCounter_init(0, $modulus)
+    }
+}</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -1033,7 +962,7 @@ generated init constructor:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_gen_init</span><span class="tok-p">(</span><span class="tok-nv">$value</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$this.ModularCounter_gen_init($value, $modulus)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1042,7 +971,7 @@ the custom init constructor:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">ModularCounter_init</span><span class="tok-p">(</span><span class="tok-n">0</span><span class="tok-p">,</span> <span class="tok-nv">$modulus</span><span class="tok-p">)</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$this.ModularCounter_init(0, $modulus)</code></pre>
 </div>
 </div>
 </div>
@@ -1056,18 +985,18 @@ non-constructor methods.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;HelpHandler&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[PSCustomObject] $successor, [string] $topic&#39;</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "HelpHandler" $null '[PSCustomObject] $successor, [string] $topic'
 
-<span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Widget&quot;</span> <span class="tok-n">-extends</span> <span class="tok-s2">&quot;HelpHandler&quot;</span> <span class="tok-s1">&#39;[PSCustomObject] $parent&#39;</span> <span class="tok-p">@{</span>
+CreateClass "Widget" -extends "HelpHandler" '[PSCustomObject] $parent' @{
 
-    <span class="tok-n">init</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[PSCustomObject]</span> <span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-no">[string]</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span>
+    init = {
+        param([PSCustomObject] $parent, [string] $topic)
 
-        <span class="tok-c"># Widget&#39;s parent is HelpHandler&#39;s successor</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">HelpHandler_init</span><span class="tok-p">(</span><span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">parent</span> <span class="tok-p">=</span> <span class="tok-nv">$parent</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+        # Widget's parent is HelpHandler's successor
+        $this.HelpHandler_init($parent, $topic)
+        $this.parent = $parent
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1076,7 +1005,7 @@ HelpHandler <strong>superclass</strong>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">HelpHandler_init</span><span class="tok-p">(</span><span class="tok-nv">$parent</span><span class="tok-p">,</span> <span class="tok-nv">$topic</span><span class="tok-p">)</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$this.HelpHandler_init($parent, $topic)</code></pre>
 </div>
 </div>
 </div>
@@ -1085,99 +1014,92 @@ HelpHandler <strong>superclass</strong>:</p>
 <div class="sect1">
 <h2 id="_object_creation">Object creation</h2>
 <div class="sectionbody">
-<div class="ulist">
-<ul>
-<li>
-<p>There are several ways to create new objects.</p>
-</li>
-<li>
-<p>The simplest way is to call function <strong>New</strong> (or alternatively <strong>New_</strong>).</p>
-</li>
-<li>
-<p>An alternative way is to call method <strong>new</strong> (or alternatively <strong>new_</strong> on
-the class object)</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>There are several ways to create new objects. The simplest way is to call the function <strong>New</strong> (or alternatively <strong>New_</strong>). An alternative way is to call the method <strong>new</strong> (or alternatively <strong>new_</strong> on the class object).</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll illustrate creation of objects on the following simple class:</p>
+<p>Let&#8217;s illustrate creation of objects on the following simple class:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-n">CreateClass</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-nv">$null</span> <span class="tok-s1">&#39;[double] $x, [double] $y&#39;</span> <span class="tok-p">@{</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Point" $null '[double] $x, [double] $y' @{
 
-    <span class="tok-n">translate</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[double]</span> <span class="tok-nv">$x</span><span class="tok-p">,</span> <span class="tok-no">[double]</span> <span class="tok-nv">$y</span><span class="tok-p">)</span>
+    translate = {
+        param([double] $x, [double] $y)
 
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">x</span> <span class="tok-p">+=</span> <span class="tok-nv">$x</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">y</span> <span class="tok-p">+=</span> <span class="tok-nv">$y</span>
-    <span class="tok-p">}</span>
+        $this.x += $x
+        $this.y += $y
+    }
 
-    <span class="tok-n">scale</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-        <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-no">[double]</span> <span class="tok-nv">$factor</span><span class="tok-p">)</span>
+    scale = {
+        param([double] $factor)
 
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">x</span> <span class="tok-p">*=</span> <span class="tok-nv">$factor</span>
-        <span class="tok-nv">$this</span><span class="tok-p">.</span><span class="tok-n">y</span> <span class="tok-p">*=</span> <span class="tok-nv">$factor</span>
-    <span class="tok-p">}</span>
-<span class="tok-p">}</span></code></pre>
+        $this.x *= $factor
+        $this.y *= $factor
+    }
+}</code></pre>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_new">New</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>The function New accepts two arguments:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>class name</p>
-</li>
-<li>
-<p>script block containing a constructor call</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
 <div class="paragraph">
-<p>For example:</p>
+<p>The function New accepts two arguments: a <strong>class name</strong>
+and a <strong>script block</strong> containing a <strong>constructor call</strong>, e.g.:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-n">20</span><span class="tok-p">)</span> <span class="tok-p">}</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$point = New "Point" { $self.init(10, 20) }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here we supply a <strong>parameterless</strong> script block. When function <strong>New</strong> is
-executed it will create the <strong>$self</strong> object and then the call
-<code>$self.init(10, 20)</code> will be executed on this object.</p>
+<p>Here we supply a <strong>parameterless script block</strong>. When function <strong>New</strong> is
+called it will create <strong>$self</strong> object and then perform the call
+<code>$self.init(10, 20)</code> on the object.</p>
 </div>
-<div class="paragraph">
-<p>The function New expects that the supplied script block contains a
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The function New <strong>expects</strong> the supplied script block to contain a
 constructor call on the object <strong>$self</strong>. If we use any other object it
-will not work.</p>
+will not work.
+</td>
+</tr>
+</table>
 </div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
 <div class="paragraph">
-<p>The way of object creation with function <strong>New</strong> will <strong>not</strong> work correctly
+<p>The way of object creation with function <strong>New</strong> will <strong>not work</strong> correctly
 within <strong>closures</strong>. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$script</span> <span class="tok-p">=</span> <span class="tok-p">{</span>
-    <span class="tok-p">...</span>
-    <span class="tok-c"># This will not work</span>
-    <span class="tok-nv">$point</span> <span class="tok-p">=</span> <span class="tok-n">New</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(-</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-p">-</span><span class="tok-n">50</span><span class="tok-p">)</span> <span class="tok-p">}</span>
-    <span class="tok-p">...</span>
-<span class="tok-p">}.</span><span class="tok-n">GetNewClosure</span><span class="tok-p">()</span></code></pre>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$script = {
+    ...
+    # This will not work
+    $point = New "Point" { $self.init(-10, -50) }
+    ...
+}.GetNewClosure()</code></pre>
 </div>
+</div>
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_new_2">New_</h3>
 <div class="paragraph">
-<p>The function New_ is similar to New but it expects a script block with a
+<p>The function New_ is similar to New but it expects a <strong>script block</strong> with a
 <strong>single parameter</strong> representing the object being created and
 initialized. The parameter name is irrelevant.</p>
 </div>
@@ -1186,14 +1108,23 @@ initialized. The parameter name is irrelevant.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point1</span> <span class="tok-p">=</span> <span class="tok-n">New_</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$self</span><span class="tok-p">)</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">30</span><span class="tok-p">,</span> <span class="tok-n">50</span><span class="tok-p">)</span> <span class="tok-p">}</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$point1 = New_ "Point" { param($self) $self.init(30, 50) }
 
-<span class="tok-nv">$point2</span> <span class="tok-p">=</span> <span class="tok-n">New_</span> <span class="tok-s2">&quot;Point&quot;</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$_</span><span class="tok-p">)</span> <span class="tok-nv">$_</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">25</span><span class="tok-p">,</span> <span class="tok-n">35</span><span class="tok-p">)</span> <span class="tok-p">}</span></code></pre>
+$point2 = New_ "Point" { param($_) $_.init(25, 35) }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>The way of object creation with function <strong>New_</strong> will <strong>work</strong> correctly
-within <strong>closures</strong>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The way of object creation with function <strong>New_</strong> will <strong>work</strong> correctly
+within <strong>closures</strong>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -1204,14 +1135,17 @@ applying methods <strong>new</strong> or <strong>new_</strong> to the class obje
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="powershell"><span></span><span class="tok-nv">$point1</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-nv">$self</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">10</span><span class="tok-p">,</span> <span class="tok-n">20</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span>
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$point1 = $PointClass.new( { $self.init(10, 20) } )
 
-<span class="tok-nv">$point2</span> <span class="tok-p">=</span> <span class="tok-nv">$PointClass</span><span class="tok-p">.</span><span class="tok-n">new_</span><span class="tok-p">(</span> <span class="tok-p">{</span> <span class="tok-k">param</span><span class="tok-p">(</span><span class="tok-nv">$_</span><span class="tok-p">)</span> <span class="tok-nv">$_</span><span class="tok-p">.</span><span class="tok-n">init</span><span class="tok-p">(</span><span class="tok-n">5</span><span class="tok-p">,</span> <span class="tok-n">8</span><span class="tok-p">)</span> <span class="tok-p">}</span> <span class="tok-p">)</span></code></pre>
+$point2 = $PointClass.new_( { param($_) $_.init(5, 8) } )</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>prettyPrint()</script>
 </body>
 </html>
