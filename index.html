@@ -444,7 +444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_overview">Overview</a></li>
 <li><a href="#_class_creation">Class creation</a>
 <ul class="sectlevel2">
-<li><a href="#_example">Example</a></li>
+<li><a href="#_example_person">Example: Person</a></li>
 </ul>
 </li>
 <li><a href="#_instance_variables">Instance variables</a>
@@ -455,20 +455,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_methods">Methods</a>
 <ul class="sectlevel2">
 <li><a href="#_overriding_methods">Overriding methods</a></li>
-<li><a href="#_example_2">Example</a></li>
+<li><a href="#_example_counters">Example: counters</a></li>
 </ul>
 </li>
 <li><a href="#_constructors">Constructors</a>
 <ul class="sectlevel2">
-<li><a href="#_generated_constructor">Generated constructor</a></li>
-<li><a href="#_example_1">Example 1</a></li>
-<li><a href="#_example_2_2">Example 2</a>
+<li><a href="#_generated_constructor">Generated constructor</a>
 <ul class="sectlevel3">
-<li><a href="#_intcounter">IntCounter</a></li>
-<li><a href="#_modularcounter_calls_other_constructors">ModularCounter calls other constructors</a></li>
+<li><a href="#_example_person_2">Example: Person</a></li>
 </ul>
 </li>
-<li><a href="#_example_3">Example 3</a></li>
+<li><a href="#_calling_other_constructors">Calling other constructors</a></li>
+<li><a href="#_calling_superclass_constructors">Calling superclass constructors</a></li>
 </ul>
 </li>
 <li><a href="#_object_creation">Object creation</a>
@@ -660,17 +658,13 @@ automatically created. The <strong>variable name</strong> is formed like this: <
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="_example">Example</h3>
+<h3 id="_example_person">Example: Person</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Person" $null '[string] $name, [int] $age, [boolean] $male' @{
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Person" $null '[string] $name, [int] $age' @{
 
-    reportAge = {
-        "My age is $($this.age)"
-    }
-
-    reportName = {
-        "My name is $($this.name)"
+    getInfo = {
+        "Name: $($this.name), age: $($this.age)"
     }
 }</code></pre>
 </div>
@@ -684,8 +678,8 @@ automatically created. The <strong>variable name</strong> is formed like this: <
 
 className         : Person
 super             :
-allVariablesStr   : [string] $name, [int] $age, [boolean] $male
-variables         : {name, age, male}
+allVariablesStr   : [string] $name, [int] $age
+variables         : {name, age}
 ...</code></pre>
 </div>
 </div>
@@ -714,7 +708,7 @@ of the <strong>generated constructor</strong> named <strong>init</strong>.
 </table>
 </div>
 <div class="paragraph">
-<p>The <strong>syntax</strong> is the same as syntax of function parameters or script block
+<p><strong>Syntax</strong> is the same as syntax of function parameters or script block
 parameters.</p>
 </div>
 <div class="sect2">
@@ -746,7 +740,7 @@ parameters.</p>
 <h2 id="_methods">Methods</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The methods are written as a <strong>dictionary</strong> of <em>(name, script block)</em>
+<p>Methods are written as a <strong>dictionary</strong> of <em>(<strong>name</strong>, <strong>script block</strong>)</em>
 pairs. The methods dictionary can be an <strong>unordered</strong> hashtable or
 <strong>ordered</strong> dictionary.</p>
 </div>
@@ -770,7 +764,7 @@ Each overridden method is available in following form:
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_2">Example</h3>
+<h3 id="_example_counters">Example: counters</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "IntCounter" $null '[int] $value' @{
@@ -884,13 +878,26 @@ called from other constructors as a method with following name:
 </tr>
 </table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_example_1">Example 1</h3>
+<div class="sect3">
+<h4 id="_example_person_2">Example: Person</h4>
 <div class="paragraph">
-<p>Let&#8217;s look at the example above which creates <strong>Person</strong> class. The
-Person&#8217;s methods don&#8217;t include custom constructors. The generated
-constructor <strong>init</strong> is available after class creation. Its arguments
+<p>Let&#8217;s look again at the above example which creates <strong>Person</strong> class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "Person" $null '[string] $name, [int] $age' @{
+
+    # Constructor 'init' is automatically generated
+
+    getInfo = {
+        "Name: $($this.name), age: $($this.age)"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The Person&#8217;s methods don&#8217;t include custom constructors. The generated
+constructor <strong>init</strong> is available after class creation. Its <strong>arguments</strong>
 correspond to instance variables:</p>
 </div>
 <div class="ulist">
@@ -901,28 +908,26 @@ correspond to instance variables:</p>
 <li>
 <p>$age</p>
 </li>
-<li>
-<p>$male</p>
-</li>
 </ul>
 </div>
 <div class="paragraph">
-<p>We can create new objects using the <strong>init</strong> constructor:</p>
+<p>We can immediately create new objects using the generated <strong>init</strong> constructor:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$person = New "Person" { $self.init("John Smith", 23, $true) }
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">$person = New "Person" { $self.init("John Smith", 23) }
 
 &gt; $person
 
-name       age male
-----       --- ----
-John Smith  23 True</code></pre>
+name       age
+----       ---
+John Smith  23</code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_example_2_2">Example 2</h3>
+<h3 id="_calling_other_constructors">Calling other constructors</h3>
 <div class="paragraph">
 <p>Let&#8217;s rewrite <strong>IntCounter</strong> and <strong>ModularCounter</strong> classes to include only
 the constructor methods:</p>
@@ -934,9 +939,16 @@ the constructor methods:</p>
     init0 = {
         $this.value = 0
     }
-}
-
-CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The IntCounter&#8217;s generated constructor <strong>init</strong> accepts <code>[int] $value</code>
+parameter. The class also includes a parameterless constructor <strong>init0</strong>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-powershell" data-lang="powershell">CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 
     # Same as generated constructor, but with argument checks
     init = {
@@ -957,20 +969,12 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
     init0 = {
         param([int] $modulus)
 
+        # Call another constructor
         $this.ModularCounter_init(0, $modulus)
     }
 }</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_intcounter">IntCounter</h4>
-<div class="paragraph">
-<p>The IntCounter&#8217;s generated constructor <strong>init</strong> accepts <code>[int] $value</code>
-parameter. The class also includes a parameterless constructor <strong>init0</strong>.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_modularcounter_calls_other_constructors">ModularCounter calls other constructors</h4>
 <div class="paragraph">
 <p>The ModularCounter&#8217;s generated constructor <strong>init</strong> which accepts the
 parameters <code>[int] $value</code> and <code>[int] $modulus</code> is overridden by the
@@ -992,12 +996,11 @@ the custom init constructor:</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_example_3">Example 3</h3>
+<h3 id="_calling_superclass_constructors">Calling superclass constructors</h3>
 <div class="paragraph">
 <p>The following classes are a part of an example which illustrates the
-chain of responsibility design pattern. For simplicity we have excluded
+<strong>chain of responsibility</strong> design pattern. For simplicity we have excluded
 non-constructor methods.</p>
 </div>
 <div class="listingblock">
@@ -1017,7 +1020,7 @@ CreateClass "Widget" -extends "HelpHandler" '[PSCustomObject] $parent' @{
 </div>
 </div>
 <div class="paragraph">
-<p>The Widget&#8217;s init constructor calls the generated constructor of the
+<p>The Widget&#8217;s init constructor calls the <strong>generated constructor</strong> of the
 HelpHandler <strong>superclass</strong>:</p>
 </div>
 <div class="listingblock">

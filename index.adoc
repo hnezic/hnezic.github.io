@@ -130,18 +130,14 @@ The *CreateClass* function accepts following *arguments*:
 |methods |-methods |no
 |===
 
-=== Example
+=== Example: Person
 
 [source,powershell]
 ----
-CreateClass "Person" $null '[string] $name, [int] $age, [boolean] $male' @{
+CreateClass "Person" $null '[string] $name, [int] $age' @{
 
-    reportAge = {
-        "My age is $($this.age)"
-    }
-
-    reportName = {
-        "My name is $($this.name)"
+    getInfo = {
+        "Name: $($this.name), age: $($this.age)"
     }
 }
 ----
@@ -154,8 +150,8 @@ This call creates the class object *$PersonClass*:
 
 className         : Person
 super             :
-allVariablesStr   : [string] $name, [int] $age, [boolean] $male
-variables         : {name, age, male}
+allVariablesStr   : [string] $name, [int] $age
+variables         : {name, age}
 ...
 ----
 
@@ -195,7 +191,7 @@ parameters.
 
 == Methods
 
-The methods are written as a *dictionary* of _(name, script block)_
+Methods are written as a *dictionary* of _(**name**, **script block**)_
 pairs. The methods dictionary can be an *unordered* hashtable or 
 *ordered* dictionary.
 
@@ -206,7 +202,7 @@ A derived class can *override* superclass methods.
 NOTE: Each overridden method is available in following form:
 *`<className>_<methodName>`*.
 
-=== Example
+=== Example: counters
 
 [source,powershell]
 ----
@@ -281,31 +277,43 @@ called from other constructors as a method with following name:
 *`<className>_gen_init`*.
 ====
 
-=== Example 1
+==== Example: Person
 
-Let's look at the example above which creates *Person* class. The
-Person's methods don't include custom constructors. The generated
-constructor *init* is available after class creation. Its arguments
+Let's look again at the above example which creates *Person* class:
+
+[source,powershell]
+----
+CreateClass "Person" $null '[string] $name, [int] $age' @{
+
+    # Constructor 'init' is automatically generated
+
+    getInfo = {
+        "Name: $($this.name), age: $($this.age)"
+    }
+}
+----
+
+The Person's methods don't include custom constructors. The generated
+constructor *init* is available after class creation. Its *arguments*
 correspond to instance variables:
 
 * $name
 * $age
-* $male
 
-We can create new objects using the *init* constructor:
+We can immediately create new objects using the generated *init* constructor:
 
 [source,powershell]
 ----
-$person = New "Person" { $self.init("John Smith", 23, $true) }
+$person = New "Person" { $self.init("John Smith", 23) }
 
 > $person
 
-name       age male
-----       --- ----
-John Smith  23 True
+name       age
+----       ---
+John Smith  23
 ----
 
-=== Example 2
+=== Calling other constructors
 
 Let's rewrite *IntCounter* and *ModularCounter* classes to include only
 the constructor methods:
@@ -318,7 +326,13 @@ CreateClass "IntCounter" $null '[int] $value' @{
         $this.value = 0
     }
 }
+----
 
+The IntCounter's generated constructor *init* accepts `[int] $value`
+parameter. The class also includes a parameterless constructor *init0*.
+
+[source,powershell]
+----
 CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
 
     # Same as generated constructor, but with argument checks
@@ -340,17 +354,11 @@ CreateClass "ModularCounter" -extends "IntCounter" '[int] $modulus' @{
     init0 = {
         param([int] $modulus)
 
+        # Call another constructor 
         $this.ModularCounter_init(0, $modulus)
     }
 }
 ----
-
-==== IntCounter
-
-The IntCounter's generated constructor *init* accepts `[int] $value`
-parameter. The class also includes a parameterless constructor *init0*.
-
-==== ModularCounter calls other constructors
 
 The ModularCounter's generated constructor *init* which accepts the
 parameters `[int] $value` and `[int] $modulus` is overridden by the
@@ -370,10 +378,10 @@ the custom init constructor:
 $this.ModularCounter_init(0, $modulus)
 ----
 
-=== Example 3
+=== Calling superclass constructors
 
 The following classes are a part of an example which illustrates the
-chain of responsibility design pattern. For simplicity we have excluded
+*chain of responsibility* design pattern. For simplicity we have excluded
 non-constructor methods.
 
 [source,powershell]
@@ -392,7 +400,7 @@ CreateClass "Widget" -extends "HelpHandler" '[PSCustomObject] $parent' @{
 }
 ----
 
-The Widget's init constructor calls the generated constructor of the
+The Widget's init constructor calls the *generated constructor* of the
 HelpHandler *superclass*:
 
 [source,powershell]
