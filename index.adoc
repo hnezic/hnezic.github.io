@@ -1,6 +1,6 @@
 = Hrvoje Nezic blog
+// PSClasses
 https://github.com/hnezic
-// = PSClasses
 :nofooter:
 :psClassesArticle:
 :psClassesProject: https://github.com/hnezic/PSClasses[project]
@@ -35,3 +35,17 @@ of the constructor which accepts arguments corresponding to all
 instance variables. 
 This feature resembles _case classes_ in Scala or _data classes_ 
 in Kotlin. link:psClasses.html[Read more]
+
+=== Reader monad: unary functions, Cats, implementation, example, alternatives
+
+The article describes several ways of chaining unary functions 
+most relevant for Reader monad and proceeds with a summary of Reader monad
+functionality in _Cats_ library: it presents basic methods like __pure__,
+__ask__, __map__, __andThen__, _local_ and __flatMap__. The _flatMap_
+example is presented in several variants, both with and without a Reader.
+The article then includes a simple implementation of __pure__, _map_ and 
+_flatMap_ methods. A non-trivial, bigger example is converted from 
+Haskell to Scala: Reader is employed here to avoid 
+passing the same argument around. Several Scala alternatives are 
+presented and compared to the Reader solution.
+link:readerMonad.html[Read more]

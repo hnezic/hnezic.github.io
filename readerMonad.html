@@ -5,8 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
-<meta name="author" content="https://github.com/hnezic">
-<title>Hrvoje Nezic blog</title>
+<meta name="author" content="Hrvoje Nezic">
+<title>Reader Monad</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -430,64 +430,749 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Hrvoje Nezic blog</h1>
+<h1>Reader Monad</h1>
 <div class="details">
-<span id="author" class="author">https://github.com/hnezic</span><br>
+<span id="author" class="author">Hrvoje Nezic</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_introduction">Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#_chaining_functions_andthen">Chaining functions: andThen</a></li>
+<li><a href="#_chaining_functions_same_input_type">Chaining functions: same input type</a></li>
+</ul>
+</li>
+<li><a href="#_cats_reader_monad">Cats Reader monad</a>
+<ul class="sectlevel2">
+<li><a href="#_pure">pure</a></li>
+<li><a href="#_ask">ask</a></li>
+<li><a href="#_map">map</a></li>
+<li><a href="#_andthen">andThen</a></li>
+<li><a href="#_local">local</a></li>
+<li><a href="#_flatmap">flatMap</a></li>
+<li><a href="#_syntactic_sugar">Syntactic sugar</a></li>
+<li><a href="#_alternatives">Alternatives</a>
+<ul class="sectlevel3">
+<li><a href="#_plain_functions">Plain functions</a></li>
+<li><a href="#_methods">Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_implementation">Implementation</a></li>
+<li><a href="#_example">Example</a>
+<ul class="sectlevel2">
+<li><a href="#_alternatives_2">Alternatives</a>
+<ul class="sectlevel3">
+<li><a href="#_implicit_arguments">Implicit arguments</a></li>
+<li><a href="#_nested_methods">Nested methods</a></li>
+<li><a href="#_class">Class</a></li>
+</ul>
+</li>
+<li><a href="#_evaluation">Evaluation</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="_sdeditgen_structured_syntax_for_sdedit_sequence_diagrams">SDEditGen: structured syntax for sdedit sequence diagrams</h3>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p><em>SDEditGen</em> is a preprocessor tool for <em>Quick Sequence Diagram Editor</em>,
-better known as <em>sdedit</em>.
-<em>QSDE / sdedit</em> is an excellent open source <em>text to UML</em> tool, but its
-syntax is not
-so nice: it is often unintutitive, cryptic, and hard to remember.
-Also, like syntax of many sequence diagram tools, <em>sdedit&#8217;s</em> syntax is
-<em>unstructured</em>. It is easy to create and read a <em>Hello world (Bob &#8594; Alice)</em>
-example, but it is much harder to write and read complex real-world diagrams.
-<em>SDEditGen</em> aims to provide a structured, nicer, easier and more
-intuitive syntax for <em>sdedit</em>.
-<a href="sdEditGen.html">Read more</a></p>
+<p>A Reader monad deals with <strong>unary functions</strong>: it wraps a single unary
+function and allows us to <strong>combine</strong> unary functions in two different ways.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>map</strong> method combines unary functions with types
+<code>A &#8658; B</code> and <code>B &#8658; C</code>. The first function is the function wrapped by
+the <em>Reader</em>, the second function is the <em>client function</em>
+(the function supplied to <em>map</em>).</p>
+</div>
+<div class="paragraph">
+<p>The <strong>flatMap</strong> method alows us to combine two wrapped functions of the same
+input type: <code>A &#8658; B</code> and <code>A &#8658; C</code>, but of course it cannot be achieved directly.
+The <em>client function</em> passed to flatMap accepts type <code>B</code> (the wrapped function&#8217;s
+result type) and returns a <em>Reader</em> wrapping a function of type <code>A &#8658; C</code>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Scala <strong>standard library</strong>
+already includes a mechanism for combining unary functions:
+<strong>Function1</strong> trait provides <strong>andThen</strong> and <strong>compose</strong> methods.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s first explore chaining of functions by using just the Scala
+<em>standard library</em>, without <em>Reader</em> monad.</p>
+</div>
+<div class="sect2">
+<h3 id="_chaining_functions_andthen">Chaining functions: andThen</h3>
+<div class="paragraph">
+<p>The method <em>andThen</em> can combine two unary functions <em>f</em> and <em>g</em> if
+the result type of <em>f</em> matches the argument type of <em>g</em>.
+The first function&#8217;s result is passed to the second function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">val duplicate: String =&gt; String = _ * 2
+val countA: String =&gt; Int = _.count(_ == 'a')
+val combined = duplicate andThen countA
+
+combined("Abracadabra")  // Result: 8</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In other words:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A function of type A ⇒ B chained with B ⇒ C gives
+a function of type A ⇒ C.
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_psclasses_classes_for_powershell_versions_before_5_0">PSClasses: classes for PowerShell versions before 5.0</h3>
+<h3 id="_chaining_functions_same_input_type">Chaining functions: same input type</h3>
 <div class="paragraph">
-<p>The <em>PSClasses</em> project provides classes with inheritance to PowerShell
-versions earlier than 5.0.
-<em>PSClasses</em> include important features of object-oriented languages,
-like following: class inheritance, overriding methods,
-calling overridden superclass methods, multiple constructors,
-calling other constructors of same class,
-calling superclass constructors.
-The library also contains an uncommon feature: automatic generation
-of the constructor which accepts arguments corresponding to all
-instance variables.
-This feature resembles <em>case classes</em> in Scala or <em>data classes</em>
-in Kotlin. <a href="psClasses.html">Read more</a></p>
+<p>Can we somehow combine the functions of types <code>A &#8658; B</code> and <code>A &#8658; C</code>?
+Obviously, we cannot combine them <em>directly</em> by using <em>andThen</em>.
+Furthermore, what&#8217;s the purpose of combining if we just ignore
+the first function&#8217;s result?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s reformulate the question: can we somehow combine the functions
+of types <code>A &#8658; B</code> and <code>B &#8658; (A &#8658; C)</code> to produce a function of
+type <code>A &#8658; C</code>?
+Here we are using the first function&#8217;s result <code>B</code> as well as the input
+type <code>A</code>. Depending of our viewpoint the second function is a <strong>unary</strong>
+function of argument <code>A</code> or a <strong>binary</strong> function of arguments <code>B</code> and <code>A</code>.</p>
+</div>
+<div class="paragraph">
+<p>Of course we can do it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def createAC[A, B, C] (ab: A =&gt; B, bac: B =&gt; (A =&gt; C)): A =&gt; C =
+{
+  a: A =&gt;
+    val aac: A =&gt; (A =&gt; C) = ab andThen bac
+    val ac: A =&gt; C = aac(a)
+    ac(a)
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The examples of usage can be found <a href="https://scalafiddle.io/sf/7PIa7dI/4">here</a> and <a href="https://scalafiddle.io/sf/k6i5dGy/1">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s summarize it:</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A function of type A ⇒ B chained with B &#8658; (A &#8658; C) gives
+a function of type A ⇒ C.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cats_reader_monad">Cats Reader monad</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Scala Cats <em>Reader</em> monad is just a specialized <strong>Kleisli</strong> type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">type Reader[A, B] = Kleisli[Id, A, B]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>However, the library provides a <strong>Reader object</strong> with the factory method
+<em>apply</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala"> def apply[A, B](f: (A) ⇒ B): Reader[A, B]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can create <em>Reader</em> / <em>Kleisli</em> instances in this way:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">val duplicateR = Reader[String, String](_ * 2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and run it in either of following two ways:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">duplicateR("hello")
+duplicateR.run("hello")</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The wrapped function value is named <strong>run</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_pure">pure</h3>
+<div class="paragraph">
+<p>The <em>pure</em> method creates a wrapped function which ignores the input
+argument and always returns the same value.</p>
+</div>
+<div class="paragraph">
+<p>The <em>Reader</em> object <em>doesn&#8217;t</em> provide a <em>pure</em> method, but we can achieve the
+same effect by calling <strong>Kleisli</strong>'s <em>pure</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Kleisli
+import cats.implicits._
+import cats.Id
+
+val constant: Kleisli[Id, String, Int] = Kleisli.pure(456)
+constant("abc")  // Result: 456</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_reader_monad_unary_functions_cats_implementation_example_alternatives">Reader monad: unary functions, Cats, implementation, example, alternatives</h3>
+<h3 id="_ask">ask</h3>
 <div class="paragraph">
-<p>The article describes several ways of chaining unary functions
-most relevant for Reader monad and proceeds with a summary of Reader monad
-functionality in <em>Cats</em> library: it presents basic methods like <em>pure</em>,
-<em>ask</em>, <em>map</em>, <em>andThen</em>, <em>local</em> and <em>flatMap</em>. The <em>flatMap</em>
-example is presented in several variants, both with and without a Reader.
-The article then includes a simple implementation of <em>pure</em>, <em>map</em> and
-<em>flatMap</em> methods. A non-trivial, bigger example is converted from
-Haskell to Scala: Reader is employed here to avoid
-passing the same argument around. Several Scala alternatives are
-presented and compared to the Reader solution.
-<a href="readerMonad.html">Read more</a></p>
+<p>The <em>ask</em> method creates a wrapped <strong>identity</strong> function for a given type.</p>
+</div>
+<div class="paragraph">
+<p>Since <em>Reader</em> object <em>doesn&#8217;t</em> provide <em>ask</em> method, we can just use
+<strong>Kleisli</strong>'s <em>ask</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Kleisli
+import cats.implicits._
+import cats.Id
+
+val identityR: Kleisli[Id, String, String] = Kleisli.ask
+identityR("abc")  // Result: abc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Perhaps it is easier to wrap <em>identity</em> directly into a <em>Reader</em>
+instead of using <em>ask</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">val identityR = Reader[String, String](identity)</code></pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_map">map</h3>
+<div class="paragraph">
+<p>The <em>Reader</em> monad&#8217;s <em>map</em> method provides similar functionality
+as <em>Function1</em>'s <strong>andThen</strong>: combining two unary functions where the result type
+of the first function and the argument type of the second function
+match.</p>
+</div>
+<div class="paragraph">
+<p>Its conceptual signature (pretending for a moment that
+<em>Reader</em> was not a specialized <em>Kleisli</em>) looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def map[C](f: (B) ⇒ C): Reader[A, C]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The resulting function is simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">run andThen f</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s rewrite a previous simple example using <em>Reader</em> and <em>map</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Reader
+
+val duplicate: Reader[String, String] = Reader(_ * 2)
+val combined: Reader[String, Int] = duplicate map (_.count(_ == 'a'))
+
+combined("Abracadabra")  // Result: 8</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_andthen">andThen</h3>
+<div class="paragraph">
+<p>This methods comes in two flavors:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def andThen[C](f: (B) ⇒ C): Reader[A, C]</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def andThen[C](r: Reader[B, C]): Reader[A, C]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first version is the same as <em>map</em>. The second version allows us to
+chain two <em>Reader</em>s.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_local">local</h3>
+<div class="paragraph">
+<p>The method <em>local</em> has the following conceptual signature:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def local[A0](f: (A0) ⇒ A): Reader[A0, B]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It is similar to <em>map</em> and <em>andThen</em>, but the client function <em>f</em>
+comes first in the chain, not the second.</p>
+</div>
+<div class="paragraph">
+<p>The resulting function is:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">f andThen run</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following simple example illustrates this method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Reader
+
+val duplicateR = Reader[String, String](_ * 2)
+val duplicateIntR = duplicateR.local[Int](_.toString)
+duplicateIntR(123)  // Result: 123123</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_flatmap">flatMap</h3>
+<div class="paragraph">
+<p>As we explained above, the <em>flatMap</em> method gives us enhanced
+functionality: it allows us to combine two <em>Reader</em>s which wrap the
+functions with <strong>same</strong> input types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def flatMap[C](f: (B) ⇒ Reader[A, C]): Reader[A, C]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s illustrate it on an example from the book
+<a href="https://underscore.io/books/scala-with-cats/">Scala with Cats</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Reader
+
+case class Cat(name: String, favoriteFood: String)
+val garfield = Cat("Garfield", "lasagne")
+
+val greetR: Reader[Cat, String] = Reader(cat =&gt; s"Hello ${cat.name}")
+val feedR: Reader[Cat, String] = Reader(cat =&gt; s"Have a nice bowl of ${cat.favoriteFood}")
+
+val greetFeedR: Reader[Cat, String] = greetR.flatMap { greet =&gt;
+  feedR.map { feed =&gt; s"$greet. $feed" }
+}
+
+println( greetFeedR(garfield) )
+// Result: Hello Garfield. Have a nice bowl of lasagne.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_syntactic_sugar">Syntactic sugar</h3>
+<div class="paragraph">
+<p>As always, combining monads is easier if we use <strong>for-comprehensions</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">val greetFeedR2: Reader[Cat, String] = for {
+  greet &lt;- greetR
+  feed &lt;- feedR
+} yield s"$greet. $feed"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_alternatives">Alternatives</h3>
+<div class="sect3">
+<h4 id="_plain_functions">Plain functions</h4>
+<div class="paragraph">
+<p>Actually, the above example is not very impressive since we can very
+easily achieve the same effect by using just plain functions, even
+without <em>andThen</em> composition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">val greetR: Cat =&gt; String = cat =&gt; s"Hello ${cat.name}"
+val feedR: Cat =&gt; String = cat =&gt; s"Have a nice bowl of ${cat.favoriteFood}"
+
+val greetFeedR3: Cat =&gt; String = { cat =&gt;
+  val greet = greetR(cat)
+  val feed = feedR(cat)
+  s"$greet. $feed."
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_methods">Methods</h4>
+<div class="paragraph">
+<p>Furthermore, the question is: why should we write the functions
+operating on the <em>Cat</em> class outside of the class, when a significantly
+simpler way is just to write the methods instead.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">case class Cat(name: String, favoriteFood: String)
+{
+  def greet = s"Hello $name"
+  def feed = s"Have a nice bowl of $favoriteFood"
+  def greetFeed = s"$greet. $feed"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation">Implementation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It can be instructive to implement a simple version of some monad or
+other entity we are trying to understand, and I think it is
+true in this case as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">case class Reader[A, B] (val run: A =&gt; B) {
+
+  def map[C](f: B =&gt; C): Reader[A, C] = { Reader(run andThen f) }
+
+  def flatMap[C](f: B =&gt; Reader[A, C]): Reader[A, C] = {
+    val aToC: A =&gt; C = { a: A =&gt;
+      val combinedFn: A =&gt; Reader[A, C] = run andThen f
+      val readerAC: Reader[A, C] = combinedFn(a)
+      readerAC.run(a)
+    }
+    Reader(aToC)
+  }
+}
+
+object Reader {
+  def pure[A, B](b: B): Reader[A, B] = {
+    val aToB: A =&gt; B = { a: A =&gt; b }
+    Reader(aToB)
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This implementation along with the usage examples is available <a href="https://scastie.scala-lang.org/a3gXgK5PRFKnImiCsWA4QQ">here</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example">Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following example was taken from an <a href="https://engineering.dollarshaveclub.com/the-reader-monad-example-motivation-542c54ccfaa8">article</a> and converted
+from Haskell to Scala. The example is interesting since it is non-trivial and
+it has a purpose: to avoid passing the same argument around.</p>
+</div>
+<div class="paragraph">
+<p>The example generates web content (HTML code) for the following hierarchy:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>view</p>
+<div class="ulist">
+<ul>
+<li>
+<p>page</p>
+<div class="ulist">
+<ul>
+<li>
+<p>topnav</p>
+</li>
+<li>
+<p>content <em>(needs email)</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>left</p>
+</li>
+<li>
+<p>right</p>
+<div class="ulist">
+<ul>
+<li>
+<p>article</p>
+<div class="ulist">
+<ul>
+<li>
+<p>widget <em>(needs email)</em></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each of the above entities is implemented by a function returning HTML.
+Several functions need an argument <em>(email)</em>, which means that all
+other functions need this argument, too.</p>
+</div>
+<div class="paragraph">
+<p>To avoid passing the same argument from function to function down the
+hierarchy, the example employs <em>Reader</em> monad: each function returns
+a <em>Reader</em>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">import cats.data.Reader
+
+type Email = String
+type Html = String
+
+def div(children: List[Html]): Html = "&lt;div&gt;" + children.mkString + "&lt;/div&gt;"
+def h1(children: List[Html]): Html = "&lt;h1&gt;" + children.mkString + "&lt;/h1&gt;"
+def p(children: List[Html]): Html = "&lt;p&gt;" + children.mkString + "&lt;/p&gt;"
+
+def identityR = Reader[Email, Html](identity)
+
+def viewR: Reader[Email, Html] = for {
+    page &lt;- pageR
+} yield div(List(page))
+
+def pageR: Reader[Email, Html] = for {
+    content &lt;- contentR
+} yield div(List(topNav, content))
+
+def topNav: Html = div (List(h1(List("Our site"))))
+
+def contentR: Reader[Email, Html] =
+    for {
+      	email &lt;- identityR
+        right &lt;- rightR
+    } yield div(
+        List(
+            h1(
+                List("Custom Content for " + email)
+            ),
+            left,
+            right
+            )
+    )
+
+def left: Html = div (List(p(List("This is the left side"))))
+
+def rightR: Reader[Email, Html] =
+    for {
+        article &lt;- articleR
+    } yield div(
+        List(article)
+    )
+
+def articleR: Reader[Email, Html] =
+    for {
+        widget &lt;- widgetR
+    } yield div(
+        List(
+            p(List("This is an article")),
+            widget
+            )
+    )
+
+def widgetR: Reader[Email, Html] =
+  for {
+    email &lt;- identityR
+  } yield div(List(p(List("Hey " + email + " we've got a great offer for you!"))))
+
+println(
+  viewR("john@coolmail.com")
+)</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_alternatives_2">Alternatives</h3>
+<div class="paragraph">
+<p>The goal of avoiding the need to pass an argument around can be achieved
+in other ways as well. Let&#8217;s explore the alternatives.</p>
+</div>
+<div class="sect3">
+<h4 id="_implicit_arguments">Implicit arguments</h4>
+<div class="paragraph">
+<p>Scala provides implicit arguments whose purpose is exactly to avoid
+explicit passing of boilerplate arguments.
+In this <a href="https://scalafiddle.io/sf/BY61YSQ/0">example</a> each method just takes an implicit <em>email</em>
+argument which is not explicitly passed to lower-level functions:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">...
+def content (implicit email: Email): Html =
+        div(List(
+            h1(
+                List("Custom Content for " + email)
+            ),
+            left,
+            right
+            )
+        )
+...
+def right (implicit email: Email): Html = div(List(article))
+
+def article (implicit email: Email): Html = div(
+        List(
+            p(List("This is an article")),
+            widget
+            )
+    )
+...</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nested_methods">Nested methods</h4>
+<div class="paragraph">
+<p>We can avoid passing the <em>email</em> parameter around by providing the argument
+only in the top method which embraces all lower-level methods. Other methods
+don&#8217;t need to declare the argument at all:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">def view (email: Email): Html =
+{
+  def page: Html = div(List(topNav, content))
+
+  def topNav: Html = div (List(h1(List("Our site"))))
+
+  ...
+
+  div(List(page))
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The full example is available <a href="https://scalafiddle.io/sf/RPQTfPV/0">here</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_class">Class</h4>
+<div class="paragraph">
+<p>Finally, a simple <a href="https://scalafiddle.io/sf/w6kPObo/0">class</a> where <em>email</em> is a constructor parameter will also
+do the job. All methods have access to the parameter without declaring it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">class WebPage (email: Email)
+{
+  def view: Html = div(List(page))
+
+  def page: Html = div(List(topNav, content))
+
+  def topNav: Html = div (List(h1(List("Our site"))))
+  ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_evaluation">Evaluation</h3>
+<div class="paragraph">
+<p>Each of the presented alternatives has about 40 lines of code,
+significantly smaller compared
+to about 60 lines of <em>Reader</em> example. Furthermore, each alternative
+example is much easier to read and understand.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In my view, using <strong>Reader</strong> monad
+to avoid passing an argument around doesn&#8217;t provide benefits
+(at least not in Scala). There are simpler alternatives.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>prettyPrint()</script>
 </body>
 </html>

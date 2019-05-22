@@ -1,0 +1,541 @@
+= Reader Monad
+Hrvoje Nezic
+:source-highlighter: prettify
+:icons: font
+:nofooter:
+ifndef::env-github[]
+:toc: left
+:toclevels: 4
+endif::[]
+:functionsGarfield: https://scalafiddle.io/sf/7PIa7dI/4[here]
+:functionsWeb: https://scalafiddle.io/sf/k6i5dGy/1[here]
+:readerImpl: https://scastie.scala-lang.org/a3gXgK5PRFKnImiCsWA4QQ[here]
+:haskellArticle: https://engineering.dollarshaveclub.com/the-reader-monad-example-motivation-542c54ccfaa8[article]
+:implicitsExample: https://scalafiddle.io/sf/BY61YSQ/0[example]
+:nestedExample: https://scalafiddle.io/sf/RPQTfPV/0[here]
+:classExample: https://scalafiddle.io/sf/w6kPObo/0[class]
+
+== Introduction
+
+A Reader monad deals with **unary functions**: it wraps a single unary 
+function and allows us to *combine* unary functions in two different ways. 
+
+The *map* method combines unary functions with types 
+`A => B` and `B => C`. The first function is the function wrapped by 
+the __Reader__, the second function is the _client function_ 
+(the function supplied to __map__). 
+
+The *flatMap* method alows us to combine two wrapped functions of the same 
+input type: `A => B` and `A => C`, but of course it cannot be achieved directly. 
+The _client function_ passed to flatMap accepts type `B` (the wrapped function's 
+result type) and returns a _Reader_ wrapping a function of type `A => C`.
+
+TIP: Scala *standard library* 
+already includes a mechanism for combining unary functions:
+*Function1* trait provides *andThen* and **compose** methods.
+
+Let's first explore chaining of functions by using just the Scala 
+__standard library__, without _Reader_ monad.
+
+=== Chaining functions: andThen
+
+The method _andThen_ can combine two unary functions _f_ and _g_ if 
+the result type of _f_ matches the argument type of __g__.
+The first function's result is passed to the second function:
+
+[source,scala]
+----
+val duplicate: String => String = _ * 2
+val countA: String => Int = _.count(_ == 'a')
+val combined = duplicate andThen countA
+
+combined("Abracadabra")  // Result: 8
+----
+
+In other words:
+
+NOTE: A function of type A ⇒ B chained with B ⇒ C gives 
+a function of type A ⇒ C.
+
+=== Chaining functions: same input type
+
+Can we somehow combine the functions of types `A => B` and `A => C`?
+Obviously, we cannot combine them _directly_ by using _andThen_.
+Furthermore, what's the purpose of combining if we just ignore 
+the first function's result?
+
+Let's reformulate the question: can we somehow combine the functions 
+of types `A => B` and `B => (A => C)` to produce a function of 
+type `A => C`? 
+Here we are using the first function's result `B` as well as the input 
+type `A`. Depending of our viewpoint the second function is a *unary* 
+function of argument `A` or a *binary* function of arguments `B` and `A`.
+
+Of course we can do it:
+
+[source,scala]
+----
+def createAC[A, B, C] (ab: A => B, bac: B => (A => C)): A => C = 
+{
+  a: A =>
+    val aac: A => (A => C) = ab andThen bac
+    val ac: A => C = aac(a)
+    ac(a)
+}
+----
+
+The examples of usage can be found {functionsGarfield} and {functionsWeb}. 
+
+Let's summarize it:
+
+NOTE: A function of type A ⇒ B chained with B => (A => C) gives 
+a function of type A ⇒ C.
+
+== Cats Reader monad
+
+The Scala Cats _Reader_ monad is just a specialized *Kleisli* type:
+
+[source,scala]
+----
+type Reader[A, B] = Kleisli[Id, A, B]
+----
+
+However, the library provides a *Reader object* with the factory method
+__apply__:
+
+[source,scala]
+----
+ def apply[A, B](f: (A) ⇒ B): Reader[A, B] 
+----
+
+We can create _Reader_ / _Kleisli_ instances in this way:
+
+[source,scala]
+----
+val duplicateR = Reader[String, String](_ * 2)
+----
+
+and run it in either of following two ways:
+
+[source,scala]
+----
+duplicateR("hello")
+duplicateR.run("hello")
+----
+
+NOTE: The wrapped function value is named **run**.
+
+=== pure
+
+The _pure_ method creates a wrapped function which ignores the input 
+argument and always returns the same value.
+
+The _Reader_ object _doesn't_ provide a _pure_ method, but we can achieve the 
+same effect by calling **Kleisli**'s __pure__:
+
+[source,scala]
+----
+import cats.data.Kleisli
+import cats.implicits._
+import cats.Id
+
+val constant: Kleisli[Id, String, Int] = Kleisli.pure(456)
+constant("abc")  // Result: 456
+----
+
+=== ask
+
+The _ask_ method creates a wrapped *identity* function for a given type.
+
+Since _Reader_ object _doesn't_ provide _ask_ method, we can just use 
+**Kleisli**'s __ask__:
+
+[source,scala]
+----
+import cats.data.Kleisli
+import cats.implicits._
+import cats.Id
+
+val identityR: Kleisli[Id, String, String] = Kleisli.ask
+identityR("abc")  // Result: abc
+----
+
+Perhaps it is easier to wrap _identity_ directly into a _Reader_ 
+instead of using __ask__:
+
+[source,scala]
+----
+val identityR = Reader[String, String](identity)
+----
+
+=== map
+
+The _Reader_ monad's _map_ method provides similar functionality 
+as __Function1__'s *andThen*: combining two unary functions where the result type 
+of the first function and the argument type of the second function 
+match.
+
+Its conceptual signature (pretending for a moment that
+_Reader_ was not a specialized __Kleisli__) looks like this:
+
+[source,scala]
+----
+def map[C](f: (B) ⇒ C): Reader[A, C]
+----
+
+The resulting function is simply:
+
+[source,scala]
+----
+run andThen f
+----
+
+Let's rewrite a previous simple example using __Reader__ and __map__:
+
+[source,scala]
+----
+import cats.data.Reader
+
+val duplicate: Reader[String, String] = Reader(_ * 2)
+val combined: Reader[String, Int] = duplicate map (_.count(_ == 'a'))
+
+combined("Abracadabra")  // Result: 8
+----
+
+=== andThen
+
+This methods comes in two flavors:
+
+[source,scala]
+----
+def andThen[C](f: (B) ⇒ C): Reader[A, C]
+----
+
+[source,scala]
+----
+def andThen[C](r: Reader[B, C]): Reader[A, C]
+----
+
+The first version is the same as __map__. The second version allows us to 
+chain two __Reader__s.  
+
+=== local
+
+The method _local_ has the following conceptual signature:
+
+[source,scala]
+----
+def local[A0](f: (A0) ⇒ A): Reader[A0, B]
+----
+
+It is similar to _map_ and _andThen_, but the client function _f_ 
+comes first in the chain, not the second.
+
+The resulting function is:
+
+[source,scala]
+----
+f andThen run
+----
+
+The following simple example illustrates this method:
+
+[source,scala]
+----
+import cats.data.Reader
+
+val duplicateR = Reader[String, String](_ * 2)
+val duplicateIntR = duplicateR.local[Int](_.toString)
+duplicateIntR(123)  // Result: 123123
+----
+
+=== flatMap
+
+
+As we explained above, the _flatMap_ method gives us enhanced 
+functionality: it allows us to combine two __Reader__s which wrap the
+functions with *same* input types:
+
+[source,scala]
+----
+def flatMap[C](f: (B) ⇒ Reader[A, C]): Reader[A, C]
+----
+
+Let's illustrate it on an example from the book 
+https://underscore.io/books/scala-with-cats/[Scala with Cats].
+
+[source,scala]
+----
+import cats.data.Reader
+
+case class Cat(name: String, favoriteFood: String)
+val garfield = Cat("Garfield", "lasagne")
+
+val greetR: Reader[Cat, String] = Reader(cat => s"Hello ${cat.name}")
+val feedR: Reader[Cat, String] = Reader(cat => s"Have a nice bowl of ${cat.favoriteFood}")
+
+val greetFeedR: Reader[Cat, String] = greetR.flatMap { greet =>
+  feedR.map { feed => s"$greet. $feed" }
+}
+
+println( greetFeedR(garfield) )
+// Result: Hello Garfield. Have a nice bowl of lasagne.
+----
+
+=== Syntactic sugar
+
+As always, combining monads is easier if we use **for-comprehensions**:
+
+[source,scala]
+----
+val greetFeedR2: Reader[Cat, String] = for {
+  greet <- greetR
+  feed <- feedR
+} yield s"$greet. $feed"
+----
+
+=== Alternatives
+
+==== Plain functions
+
+Actually, the above example is not very impressive since we can very 
+easily achieve the same effect by using just plain functions, even 
+without _andThen_ composition: 
+
+[source,scala]
+----
+val greetR: Cat => String = cat => s"Hello ${cat.name}"
+val feedR: Cat => String = cat => s"Have a nice bowl of ${cat.favoriteFood}"
+
+val greetFeedR3: Cat => String = { cat =>
+  val greet = greetR(cat)
+  val feed = feedR(cat)
+  s"$greet. $feed."
+}
+----
+
+==== Methods
+
+Furthermore, the question is: why should we write the functions 
+operating on the _Cat_ class outside of the class, when a significantly 
+simpler way is just to write the methods instead.
+
+[source,scala]
+----
+case class Cat(name: String, favoriteFood: String)
+{
+  def greet = s"Hello $name"
+  def feed = s"Have a nice bowl of $favoriteFood"
+  def greetFeed = s"$greet. $feed"
+}
+----
+
+== Implementation
+
+It can be instructive to implement a simple version of some monad or 
+other entity we are trying to understand, and I think it is 
+true in this case as well:
+
+[source,scala]
+----
+case class Reader[A, B] (val run: A => B) {
+  
+  def map[C](f: B => C): Reader[A, C] = { Reader(run andThen f) }
+  
+  def flatMap[C](f: B => Reader[A, C]): Reader[A, C] = { 
+    val aToC: A => C = { a: A =>
+      val combinedFn: A => Reader[A, C] = run andThen f
+      val readerAC: Reader[A, C] = combinedFn(a)
+      readerAC.run(a)
+    }
+    Reader(aToC)
+  }
+}
+
+object Reader {
+  def pure[A, B](b: B): Reader[A, B] = {
+    val aToB: A => B = { a: A => b }
+    Reader(aToB)
+  }
+}
+----
+
+This implementation along with the usage examples is available {readerImpl}.
+
+== Example
+
+The following example was taken from an {haskellArticle} and converted 
+from Haskell to Scala. The example is interesting since it is non-trivial and 
+it has a purpose: to avoid passing the same argument around.
+
+The example generates web content (HTML code) for the following hierarchy:
+
+* view
+** page
+*** topnav
+*** content _(needs email)_
+**** left
+**** right
+***** article
+****** widget _(needs email)_
+
+Each of the above entities is implemented by a function returning HTML.
+Several functions need an argument __(email)__, which means that all
+other functions need this argument, too.
+
+To avoid passing the same argument from function to function down the 
+hierarchy, the example employs _Reader_ monad: each function returns 
+a __Reader__. 
+
+[source,scala]
+----
+import cats.data.Reader
+
+type Email = String
+type Html = String
+
+def div(children: List[Html]): Html = "<div>" + children.mkString + "</div>"
+def h1(children: List[Html]): Html = "<h1>" + children.mkString + "</h1>"
+def p(children: List[Html]): Html = "<p>" + children.mkString + "</p>"
+
+def identityR = Reader[Email, Html](identity)
+
+def viewR: Reader[Email, Html] = for {
+    page <- pageR
+} yield div(List(page))
+
+def pageR: Reader[Email, Html] = for {
+    content <- contentR
+} yield div(List(topNav, content))
+
+def topNav: Html = div (List(h1(List("Our site"))))
+
+def contentR: Reader[Email, Html] = 
+    for {
+      	email <- identityR
+        right <- rightR
+    } yield div(
+        List(
+            h1(
+                List("Custom Content for " + email)
+            ),
+            left,
+            right
+            )
+    )
+
+def left: Html = div (List(p(List("This is the left side"))))
+
+def rightR: Reader[Email, Html] = 
+    for {
+        article <- articleR
+    } yield div(
+        List(article)
+    )
+
+def articleR: Reader[Email, Html] = 
+    for {
+        widget <- widgetR
+    } yield div(
+        List(
+            p(List("This is an article")),
+            widget
+            )
+    )
+
+def widgetR: Reader[Email, Html] = 
+  for {
+    email <- identityR
+  } yield div(List(p(List("Hey " + email + " we've got a great offer for you!"))))
+
+println(
+  viewR("john@coolmail.com")
+)
+----
+
+=== Alternatives
+
+The goal of avoiding the need to pass an argument around can be achieved 
+in other ways as well. Let's explore the alternatives.
+
+==== Implicit arguments
+
+Scala provides implicit arguments whose purpose is exactly to avoid 
+explicit passing of boilerplate arguments. 
+In this {implicitsExample} each method just takes an implicit _email_ 
+argument which is not explicitly passed to lower-level functions:
+
+[source,scala]
+----
+...
+def content (implicit email: Email): Html = 
+        div(List(
+            h1(
+                List("Custom Content for " + email)
+            ),
+            left,
+            right
+            )
+        )
+...
+def right (implicit email: Email): Html = div(List(article))
+
+def article (implicit email: Email): Html = div(
+        List(
+            p(List("This is an article")),
+            widget
+            )
+    )
+...
+----
+
+==== Nested methods
+
+We can avoid passing the _email_ parameter around by providing the argument 
+only in the top method which embraces all lower-level methods. Other methods
+don't need to declare the argument at all:
+
+[source,scala]
+----
+def view (email: Email): Html = 
+{  
+  def page: Html = div(List(topNav, content))
+  
+  def topNav: Html = div (List(h1(List("Our site"))))
+  
+  ...
+
+  div(List(page))
+}
+----
+
+The full example is available {nestedExample}. 
+
+==== Class
+
+Finally, a simple {classExample} where _email_ is a constructor parameter will also
+do the job. All methods have access to the parameter without declaring it:
+
+[source,scala]
+----
+class WebPage (email: Email) 
+{
+  def view: Html = div(List(page))
+  
+  def page: Html = div(List(topNav, content))
+  
+  def topNav: Html = div (List(h1(List("Our site"))))
+  ...
+}
+----
+
+=== Evaluation
+
+Each of the presented alternatives has about 40 lines of code, 
+significantly smaller compared
+to about 60 lines of _Reader_ example. Furthermore, each alternative
+example is much easier to read and understand. 
+
+NOTE: In my view, using *Reader* monad
+to avoid passing an argument around doesn't provide benefits 
+(at least not in Scala). There are simpler alternatives.
