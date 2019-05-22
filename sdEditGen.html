@@ -5,8 +5,8 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
-<meta name="author" content="https://github.com/hnezic">
-<title>Hrvoje Nezic blog</title>
+<meta name="author" content="Hrvoje Nezic">
+<title>SDEditGen</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -430,17 +430,58 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Hrvoje Nezic blog</h1>
+<h1>SDEditGen</h1>
 <div class="details">
-<span id="author" class="author">https://github.com/hnezic</span><br>
+<span id="author" class="author">Hrvoje Nezic</span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_qsde_sdedit_good_parts">QSDE / sdedit: good parts</a>
+<ul class="sectlevel2">
+<li><a href="#_nice_desktop_gui_application">Nice desktop GUI application</a></li>
+<li><a href="#_plenty_of_features">Plenty of features</a></li>
+<li><a href="#_links_to_other_diagrams">Links to other diagrams</a></li>
+</ul>
+</li>
+<li><a href="#_whats_wrong_with_sdedit">What&#8217;s wrong with sdedit</a>
+<ul class="sectlevel2">
+<li><a href="#_unstructured_syntax">Unstructured syntax</a></li>
+<li><a href="#_do_repeat_yourself">Do repeat yourself</a></li>
+<li><a href="#_cryptic_syntax">Cryptic syntax</a></li>
+</ul>
+</li>
+<li><a href="#_sdeditgen_structured_syntax_for_sdedit">SDEditGen: structured syntax for sdedit</a>
+<ul class="sectlevel2">
+<li><a href="#_object_creation_method_calls">Object creation &amp; method calls</a>
+<ul class="sectlevel3">
+<li><a href="#_object_as_context">Object as context</a></li>
+<li><a href="#_method_call_as_context">Method call as context</a></li>
+<li><a href="#_object_creation_as_context">Object creation as context</a></li>
+</ul>
+</li>
+<li><a href="#_object_declarations">Object declarations</a></li>
+<li><a href="#_return_clauses">Return clauses</a></li>
+<li><a href="#_diagram_links">Diagram links</a></li>
+<li><a href="#_syntax_diagrams">Syntax diagrams</a></li>
+<li><a href="#_running">Running</a>
+<ul class="sectlevel3">
+<li><a href="#_http_server">HTTP server</a></li>
+<li><a href="#_command_line_interface">Command-line interface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div id="content">
-<div class="sect2">
-<h3 id="_sdeditgen_structured_syntax_for_sdedit_sequence_diagrams">SDEditGen: structured syntax for sdedit sequence diagrams</h3>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p><em>SDEditGen</em> is a preprocessor tool for <em>Quick Sequence Diagram Editor</em>,
 better known as <em>sdedit</em>.
@@ -451,27 +492,718 @@ Also, like syntax of many sequence diagram tools, <em>sdedit&#8217;s</em> syntax
 <em>unstructured</em>. It is easy to create and read a <em>Hello world (Bob &#8594; Alice)</em>
 example, but it is much harder to write and read complex real-world diagrams.
 <em>SDEditGen</em> aims to provide a structured, nicer, easier and more
-intuitive syntax for <em>sdedit</em>.
-<a href="sdEditGen.html">Read more</a></p>
+intuitive syntax for <em>sdedit</em>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_qsde_sdedit_good_parts">QSDE / sdedit: good parts</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_nice_desktop_gui_application">Nice desktop GUI application</h3>
+<div class="paragraph">
+<p><em>Quick Sequence Diagram Editor</em> is
+a GUI application, with the open diagrams tree view on the left,
+the text editor on the bottom right and the real-time diagram preview pane
+on the top right:</p>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="images/breadthFirst.png" alt="BreadthFirstSearch">
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_psclasses_classes_for_powershell_versions_before_5_0">PSClasses: classes for PowerShell versions before 5.0</h3>
+<h3 id="_plenty_of_features">Plenty of features</h3>
 <div class="paragraph">
-<p>The <em>PSClasses</em> project provides classes with inheritance to PowerShell
-versions earlier than 5.0.
-<em>PSClasses</em> include important features of object-oriented languages,
-like following: class inheritance, overriding methods,
-calling overridden superclass methods, multiple constructors,
-calling other constructors of same class,
-calling superclass constructors.
-The library also contains an uncommon feature: automatic generation
-of the constructor which accepts arguments corresponding to all
-instance variables.
-This feature resembles <em>case classes</em> in Scala or <em>data classes</em>
-in Kotlin. <a href="psClasses.html">Read more</a></p>
+<p>QSDE / sddit offers some features which are not very often found
+in sequence diagram tools, like <em>real time diagram server</em> and <em>mutithreading
+support</em>, as well as not so exotic but nice features like
+<em>automatic redrawing</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_links_to_other_diagrams">Links to other diagrams</h3>
+<div class="paragraph">
+<p>In my view this is the <strong>most important</strong> feature for real-world complex
+diagrams! For toy examples it is not needed, of course.</p>
+</div>
+<div class="imageblock right text-left">
+<div class="content">
+<img src="images/links.png" alt="Links">
+</div>
+</div>
+<div class="paragraph">
+<p>The diagram to the right includes the links to diagrams <em>Create_Matadata.sd</em>
+and <em>Create_leaf.sd</em>. When the user <strong>clicks</strong> on a <em>diagram link</em> the
+application will <strong>replace</strong> the current diagram with the clicked one,
+and also display the newly opened diagram name in the tree view.</p>
+</div>
+<div class="paragraph">
+<p>Why is this feature so important? The main reason why we need UML diagrams
+at all is software <strong>complexity</strong>. Therefore the diagrams worth to
+be drawn are also complex, and this means they tend to become <strong>big</strong>
+pretty soon.
+In my view a <strong>single</strong> diagram <strong>should not</strong> become too big.
+Perhaps a meaningful limit for a single diagram is that it horizontally fits
+a screen width in the full-screen mode and that vertically it is not much
+bigger than what fits in the full screen. If we want to follow this tip
+the only solution is to break a potentially big diagram into smaller
+interlinked diagrams.</p>
+</div>
+<div class="paragraph">
+<p>There are many <em>text to UML</em> tools but it is questionable whether any
+open source or inexpensive tool besides <em>sdedit</em> includes
+a similar functionality.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_whats_wrong_with_sdedit">What&#8217;s wrong with sdedit</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_unstructured_syntax">Unstructured syntax</h3>
+<div class="paragraph">
+<p>An important use case for sequence diagrams is when we need to <strong>understand</strong>
+an unfamiliar, complex and undocumented source code.</p>
+</div>
+<div class="paragraph">
+<p>The source code written in modern programming languages is <strong>structured</strong>:
+individual declarations and instructions
+reside in <strong>classes</strong> and <strong>methods</strong>, they are not just floating around.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, the code in <em>sdedit</em> and many other <em>text to UML</em>
+tools is <strong>unstructured</strong>: these tools don&#8217;t provide the means to reflect
+the structure present in the source code.</p>
+</div>
+<div class="paragraph">
+<p>The basic syntax for sending messages in <em>sdedit</em> is following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">&lt;caller&gt;:&lt;callee&gt;.message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>These instructions are by far the most common ones, so our program is mostly
+just a sequence of such instructions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_do_repeat_yourself">Do repeat yourself</h3>
+<div class="paragraph">
+<p>Object-oriented programming languages don&#8217;t force us to specify the current
+object when we call methods of other objects. Unlike that, when we are writing
+<em>sdedit</em> code we must specify the current object each time. For example:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">manager:protocolBuilder.new
+*1 manager
+    link:Create_Metadata.sd
+*1
+manager:protocolBuilder.add(Metadata)
+*2 manager
+    link:Create_Leaf.sd
+*2
+manager:protocolBuilder.add(Leaf)</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-left">
+<div class="content">
+<img src="images/diagramLinks.png" alt="DiagramLinks">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This affects readability badly.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cryptic_syntax">Cryptic syntax</h3>
+<div class="paragraph">
+<p>Let&#8217;s illustrate the problematic syntax on just one example.</p>
+</div>
+<div class="paragraph">
+<p>In the following line it looks that the source object <em>bfs</em> assigns the variable
+<em>adjList</em>, but actually this specifies that
+the target object&#8217;s method <em>getAdjacentNodes</em> <strong>returns</strong> <em>adjList</em>,
+which is something quite different:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>bfs:adjList=node.getAdjacentNodes()</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_sdeditgen_structured_syntax_for_sdedit">SDEditGen: structured syntax for sdedit</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_object_creation_method_calls">Object creation &amp; method calls</h3>
+<div class="paragraph">
+<p>The most important operations supported by SDEditGen are object creation
+and method calling.</p>
+</div>
+<div class="paragraph">
+<p><strong>QSDE / sdedit</strong> models both operations as message passing:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">sourceObject:targetObject.new(arguments)
+sourceObject:targetObject.method(arguments)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>SDEditGen</strong>’s basic idea is to avoid specifying the source object in
+every object creation and method call: the source object should be
+determined implicitly. The SDEditGen&#8217;s syntax for these operations is
+simply:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">new targetObject(arguments)
+call targetObject.method(arguments)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>How can we achieve the source object to be implicitly known? There are
+several ways, but let’s show the simplest way first.</p>
+</div>
+<div class="sect3">
+<h4 id="_object_as_context">Object as context</h4>
+<div class="paragraph">
+<p>Let’s say the object <em>test</em> creates the object <em>adapter</em> and we don’t
+care in which particular method this is happening.
+We can specify it like this:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">object test {
+    new adapter
+}</code></pre>
+</div>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-left">
+<div class="content">
+<img src="images/newAdapter.png" alt="NewAdapter">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>object</strong> statement implicitly provides the <strong>context</strong> (the
+<strong>source</strong> object) for the enclosed operations.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the object <em>test</em> calls a method on the created object, we also don’t
+have to specify the source object because it is known from the context:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">object test { <i class="conum" data-value="1"></i><b>(1)</b>
+    new adapter
+    call adapter.init
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The object <em>test</em> is the source object for both enclosed operations.</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-left">
+<div class="content">
+<img src="images/newInit.png" alt="NewInit">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_method_call_as_context">Method call as context</h4>
+<div class="paragraph">
+<p>So far so good, but how can we specify the context if <em>adapter</em>’s <em>init</em>
+method creates another object?</p>
+</div>
+<div class="paragraph">
+<p>We can do it easily because <em>adapter</em>’s <em>init</em> method call itself can
+serve as a context:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">object test { <i class="conum" data-value="1"></i><b>(1)</b>
+    new adapter
+    call adapter.init { <i class="conum" data-value="2"></i><b>(2)</b>
+        new manager
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The object <em>test</em> is the source object for both enclosed operations
+(<em>new</em> and <em>call</em>).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The object <em>adapter</em> is the source object for the enclosed operation
+(<em>new</em>).</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-left">
+<div class="content">
+<img src="images/newInitManager.png" alt="NewInitManager">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>method call</strong> statement implicitly provides the <strong>context</strong> (the
+<strong>source</strong> object) for the enclosed operations.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_object_creation_as_context">Object creation as context</h4>
+<div class="paragraph">
+<p>What if the <em>manager</em>’s constructor creates yet another object?</p>
+</div>
+<div class="paragraph">
+<p>You guess it:
+the <em>manager</em>’s creation instruction can also implicitly determine the
+source object for instructions (object creations and method calls) performed
+in the constructor:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">object test { <i class="conum" data-value="1"></i><b>(1)</b>
+    new adapter
+    call adapter.init { <i class="conum" data-value="2"></i><b>(2)</b>
+        new manager { <i class="conum" data-value="3"></i><b>(3)</b>
+            new context
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The object <em>test</em> is the source object for both enclosed operations
+(<em>new</em> and <em>call</em>).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The object <em>adapter</em> is the source object for the enclosed operation
+(<em>new</em>).</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>The object <em>manager</em> is the source object for the enclosed operation
+(<em>new</em>).</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-left">
+<div class="content">
+<img src="images/newInitManagerContext.png" alt="NewInitManagerContext">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <strong>object creation</strong> statement implicitly provides the <strong>context</strong> (the
+<strong>source</strong> object) for the enclosed operations.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_object_declarations">Object declarations</h3>
+<div class="paragraph">
+<p>Finally we are ready to show the complete example:</p>
+</div>
+<table class="tableblock frame-none grid-none stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">objects { <i class="conum" data-value="1"></i><b>(1)</b>
+    test: AdapterTest | named existing <i class="conum" data-value="2"></i><b>(2)</b>
+    adapter: Adapter
+    manager: Manager
+    context: Context
+}
+
+object test {
+    new adapter
+    call adapter.init {
+        new manager {
+            new context
+        }
+    }
+    call manager.manage(arg1, arg2) {
+        loop {
+            call context.getItem
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The keyword <em>objects</em> encloses the <strong>object declarations</strong>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The words <em>named</em> and <em>existing</em> are <strong>flags</strong> describing object attributes.
+They corresponding to <em>sdedit</em> flags.</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="imageblock text-right">
+<div class="content">
+<img src="images/simple.png" alt="SimpleDiagram" width="900">
+</div>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_return_clauses">Return clauses</h3>
+<div class="paragraph">
+<p>Adding returned objects or values to diagrams can significantly improve
+readability.
+SDEditGen&#8217;s syntax supports <em>return</em> clauses in object creation and
+method call statements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">new targetObject(arguments) return expression
+call targetObject.method(arguments) return expression</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In my view this syntax is considerably easier to read and understand
+than the original <em>sdedit</em> syntax.
+The following diagram includes several <em>return</em> clauses:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">object bfs {
+    new queue
+    call someNode.setLevel(0)
+    call queue.insert(someNode)
+    loop "while queue != ()" {
+        call queue.remove() return node <i class="conum" data-value="1"></i><b>(1)</b>
+        call node.getLevel() return level
+        call node.getAdjacentNodes() return adjList
+        loop "0 &lt;= i &lt; #adjList" {
+            call adjList.get(i) return adj
+            call adj.getLevel() return nodeLevel
+            alt "nodeLevel IS NOT defined" { <i class="conum" data-value="2"></i><b>(2)</b>
+                call adj.setLevel(`level+1`)
+                call queue.insert(adj)
+            section "else"
+            }
+        }
+    }
+    call queue.destroy()
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>An example of a method returning an object</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <strong>alt</strong> construct corresponds to <em>[c:alt]</em> construct in <em>sdedit</em></td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="images/breadthFirstWhole.png" alt="BreadthFirstWhole">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_diagram_links">Diagram links</h3>
+<div class="paragraph">
+<p>The following diagram contains several <em>diagramLink</em> statements:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">objects {
+    test: ProtocolAdapterTest | existing
+    adapter: ProtocolAdapter
+    configurator: ProtocolAdapterConfigurator
+    confHelp: ConfigurationHelper
+    manager: Manager
+    protocolBuilder: ProtocolBuilder
+    protocol: Protocol
+}
+
+object test {
+    new adapter;
+    call adapter.init(configuration) {
+        new configurator(this, configuration) {
+            new confHelp(this);
+        }
+        new manager(configurator) {
+            new protocolBuilder;
+
+            diagramLink "Create_Metadata.sd" 1; <i class="conum" data-value="1"></i><b>(1)</b>
+            call protocolBuilder.add(Metadata);
+
+            diagramLink "Create_Leaf.sd" 2;
+            call protocolBuilder.add(Leaf);
+
+            loop { <i class="conum" data-value="2"></i><b>(2)</b>
+                call protocolBuilder.add(Hierarchy);
+            }
+            call protocolBuilder.add(Top);
+            call protocolBuilder.add(Timestamp);
+            call protocolBuilder.build {
+                new protocol(this) {
+                    call protocol "Copy items from builder"; <i class="conum" data-value="3"></i><b>(3)</b>
+                }
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The <strong>diagramLink</strong> statement creates a link to another <em>sdedit</em>
+diagram</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The <strong>loop</strong> construct corresponds to <em>[c:loop]</em> construct
+in <em>sdedit</em>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>A <em>method name</em> doesn&#8217;t have to be an <em>identifier</em>, it can be
+descriptive. The <em>dot</em> character between object name and method name
+is <em>optional</em>. A statement can end with a <em>semicolon</em>, but it is
+<em>optional</em> as well.</td>
+</tr>
+</table>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="images/complex.png" alt="ComplexDiagram">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_syntax_diagrams">Syntax diagrams</h3>
+<div class="paragraph">
+<p>The SDEditGen syntax is described in the form of <a href="syntax/index.html">railroad diagrams</a>
+generated by <a href="https://github.com/bkiers/rrd-antlr4">RRD for ANTLR4</a> tool. The following <strong>excerpt</strong> illustrates
+how they look:</p>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="images/syntaxExcerpt.png" alt="SyntaxExcerpt">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running">Running</h3>
+<div class="paragraph">
+<p>SDEditGen currently doesn&#8217;t include a graphical user interface.
+There are two ways of converting the source SDEDitGen code to
+sdedit format: an HTTP server and a command-line interface.</p>
+</div>
+<div class="sect3">
+<h4 id="_http_server">HTTP server</h4>
+<div class="paragraph">
+<p>An HTTP server which converts from SDEDitGen to sdedit format allows
+us to use GUI of an HTTP client application like <em>Insomnia</em>.</p>
+</div>
+<div class="paragraph">
+<p>The server can be started from command line using <code>sbt runMain</code> command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">sbt "runMain sdeditgen.Server"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can first start <em>sbt</em> and then execute <em>runMain</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">$ sbt
+
+&gt; runMain sdeditgen.Server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command starts the server on the port <strong>8080</strong>. To convert from SDEditGen
+source code to sdedit format just issue an HTTP <strong>POST</strong> request to the
+following endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code>localhost:8080/generate</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With <em>Insomnia</em> it looks like this:</p>
+</div>
+<div class="imageblock text-left">
+<div class="content">
+<img src="images/insomnia.png" alt="Insomnia">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_command_line_interface">Command-line interface</h4>
+<div class="paragraph">
+<p>An SDEditGen source file can be converted into sdedit form by the
+following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">sbt "runMain sdeditgen.CLI &lt;input file path&gt; &lt;output folder path&gt;"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both paths can be relative or absolute. If <em>&lt;output folder path&gt;</em> is
+a relative path it is interpreted as a subfolder of the input folder.
+If <em>&lt;output folder path&gt;</em> is a dot character the input and output folders
+are the same.</p>
+</div>
+<div class="paragraph">
+<p>The input file&#8217;s extension must be <em>sdgen</em>.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see several examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">sbt "runMain sdeditgen.CLI /users/jsmith/source/demo.sdgen target"
+
+sbt "runMain sdeditgen.CLI /users/jsmith/source/demo.sdgen /users/jsmith/source/target"
+
+sbt "runMain sdeditgen.CLI source/demo.sdgen target"
+
+sbt "runMain sdeditgen.CLI demo.sdgen ."</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, an alternative way is to start <em>sbt</em> and execute <em>runMain</em>
+in <em>sbt shell</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-scala" data-lang="scala">$ sbt
+
+&gt; runMain sdeditgen.CLI &lt;input file path&gt; &lt;output folder path&gt;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+<script>prettyPrint()</script>
 </body>
 </html>
