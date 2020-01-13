@@ -40,8 +40,8 @@ intuitive syntax for __sdedit__.
 === Nice desktop GUI application
 
 _Quick Sequence Diagram Editor_ is
-a GUI application, with the open diagrams tree view on the left,
-the text editor on the bottom right and the real-time diagram preview pane
+a GUI application, with a tree view containing open diagrams on the left,
+a text editor on the bottom right and a real-time diagram preview pane
 on the top right:
 
 image::breadthFirst.png[BreadthFirstSearch,align="left"]
@@ -49,7 +49,7 @@ image::breadthFirst.png[BreadthFirstSearch,align="left"]
 === Plenty of features
 
 QSDE / sddit offers some features which are not very often found
-in sequence diagram tools, like _real time diagram server_ and __mutithreading
+in sequence diagram tools, like _real time diagram server_ and __multithreading
 support__, as well as not so exotic but nice features like 
 __automatic redrawing__.
 
